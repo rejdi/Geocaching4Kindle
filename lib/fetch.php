@@ -1,13 +1,50 @@
 <?php
-require_once 'settings.php';
-
 //gets document from uri, retrieve it with images if wanted and saves it to cache
 //in format of /cache/$gccode/file.html
 //             /cache/$gccode/images/*
-function fetch($uri, $cookiefile, $gccode, $withImages) {
-
-
+function fetchPrint($cookiefile, $gccode, $withImages, $comments) {
+	//consider skipping file, if cached dir already exists. Don't forget to remove directory upon failed download(!)
+	global $session_id;
+	$file = 'cache/' . $gccode . '/' . $gccode . '.html';
+	mkdir('cache/' . $gccode);
+	$command = 'wget -a	 result/'.$session_id.'/wget.log -O "'.$file.'" -E -H -k -P cache/ --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 http://www.geocaching.com/seek/cache_details.aspx?wp=' . $gccode;
+	
+	//logg($session_id, $command);
+	
+	if (exec(escapeshellcmd($command)) != 0) {
+		return null;
+	}
+	
+	$data = file_get_contents($file);
+	$prefix = 'cdpf.aspx?guid=';
+	$pos = stripos($data, $prefix);
+	$res = substr($data, $pos + strlen($prefix), 36);
+	if (strlen($res) != 36) {
+		return null;
+	}
+	unlink($file);
+	
+	$remoteFile = 'cdpf.aspx?guid='.$res.'&lc=' . $comments;
+	$file = 'cache/'.$gccode . '/' . $remoteFile . '.html';
+	
+	//skip download, if file already exists
+	if (file_exists($file)) {
+		return $file;
+	}
+	
+	$command = 'wget -a result/'.$session_id.'/wget.log -nd -E -H -k'.(($withImages == true) ? ' -p' : '').' -P cache/'.$gccode.' --load-cookies '.$cookiefile." --random-wait --timeout=5 --tries=3 'http://www.geocaching.com/seek/".$remoteFile."'";
+	
+	//logg($session_id, $command);
+	if (exec($command) != 0) {
+		return null;
+	}
+	
+	return $file;
 }
+/*
 
+GC38X9V
+GC1KFDH
 
+*/
 ?>

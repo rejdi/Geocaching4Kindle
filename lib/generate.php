@@ -1,8 +1,10 @@
 <?php
-
 require_once 'lib/log.php';
 require_once 'lib/login.php';
 require_once 'lib/fetch.php';
+require_once 'lib/kindle.php';
+require_once 'lib/gpx.php';
+require_once 'lib/loc.php';
 
 if ($argc > 0) {
 	$settings = unserialize($argv[1]);
@@ -10,6 +12,7 @@ if ($argc > 0) {
 		exit(1);
 	}
 }
+
 /*
  
 $settings = array of
@@ -54,7 +57,7 @@ $session_id = $settings['session'];
 
 system('rm -rf result/'.$session_id);
 mkdir('result/'.$session_id);
-
+//logg($session_id, print_r($settings, true));
 logg($session_id, 'Logging in...');
 $cookiefile = login($settings['user'], $settings['pass'], $session_id);
 
@@ -75,7 +78,7 @@ if ($settings['type'] == 'list') {
 	$process = array();
 	foreach ($codes as $code) {
 		logg($session_id, 'Downloading... ' . $code);
-		$result = fetch($cookiefile, $code, (boolean)$settings['outputKindle']['withImages']);
+		$result = fetchPrint($cookiefile, $code, (boolean)$settings['outputKindle']['withImages'], 10);
 		if (empty($result)) {
 			logg($session_id, 'Failed to download ' . $code . ', skipping ...');
 			continue;
@@ -83,7 +86,9 @@ if ($settings['type'] == 'list') {
 		$process[] = $result;
 	}
 	//TODO: processing faza
-	
+	createKindle($session_id, $process, $settings['outputKindle']);
+	createGPX($session_id, $process, $settings['outputGPX']);
+	createLOC($session_id, $process, $settings['outputLOC']);
 } else if ($settings['type'] == 'point') {
 	//TODO
 }
