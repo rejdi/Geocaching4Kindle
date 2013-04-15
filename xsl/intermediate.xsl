@@ -53,6 +53,9 @@
 		<xsl:variable name="pos" select="position()"/>
 		<xsl:value-of select="../dd[$pos]"/>
 	</comment>
+	<time>
+		<xsl:value-of select="substring-before(normalize-space(substring-after(., ']')), ' by ')"/>
+	</time>
 </log>
 </xsl:for-each>
 

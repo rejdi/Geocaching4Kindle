@@ -86,6 +86,18 @@ if ($settings['type'] == 'list') {
 		$process[] = $result;
 	}
 	//TODO: processing faza
+	$xml = new DOMDocument();
+	$xsl = new DOMDocument();
+	$xsl->load('xsl/intermediate.xsl');
+	$xslt = new XSLTProcessor();
+	$xslt->importStylesheet($xsl);
+	$root = $xml->appendChild($xml->createElement('caches'));
+	foreach ($process as $cache) {
+		$file = DOMDocument::loadHTMLFile($cache);
+		$root->appendChild($xslt->transformToDoc());
+	}
+	kindleOut = new XSLTProcessor();
+	kindleOut->importStylesheet('xsl/kindle.xsl');
 	createKindle($session_id, $process, $settings['outputKindle']);
 	createGPX($session_id, $process, $settings['outputGPX']);
 	createLOC($session_id, $process, $settings['outputLOC']);
