@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding='utf8'?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" version="1.0" encoding="utf8" indent="yes"/>
@@ -22,7 +21,7 @@
 	<xsl:if test="$withImages">
 		<link rel="stylesheet" href="images.css" type="text/css"/>
 	</xsl:if>
-</xsl>
+</xsl:template>
 
 <xsl:template match="code">
 	<xsl:attribute name="id" select="."/>
@@ -54,21 +53,21 @@
 </xsl:template>
 
 <xsl:template match="difficulty">
-	<xsl:if select="not($withImages)"/>
+	<xsl:if test="not($withImages)">
 		difficulty:
 	</xsl:if>
 	<xsl:value-of select="."/>
 </xsl:template>
 
 <xsl:template match="terrain">
-	<xsl:if select="not($withImages)"/>
+	<xsl:if test="not($withImages)">
 		terrain:
 	</xsl:if>
 	<xsl:value-of select="."/>
 </xsl:template>
 
 <xsl:template match="size">
-	<xsl:if select="not($withImages)"/>
+	<xsl:if test="not($withImages)">
 		size:
 	</xsl:if>
 	<xsl:value-of select="."/>
@@ -105,9 +104,9 @@
 </xsl:template>
 
 <xsl:template match="log">
-	<xsl:if test="position() <= $logs">
+	<xsl:if test="position() &lt;= $logs">
 		<h3 class="user"><xsl:value-of select="user"/></h3>
-		<h4 class="type><xsl:value-of select="type"/><h4>
+		<h4 class="type"><xsl:value-of select="type"/></h4>
 		<span class="time"><xsl:value-of select="time"/></span>
 		<p class="comment"><xsl:value-of select="comment"/></p>
 	</xsl:if>
@@ -143,10 +142,10 @@
 </xsl:template>
 
 <xsl:template match="caches" mode="tocName">
-	<xsl:if select="$tocTerrain">
+	<xsl:if test="$tocTerrain">
 	<table>
 	<tr>
-	<td>Name</td><td>Difficulty</td><td>Terrain</td><td>Size</td><
+	<td>Name</td><td>Difficulty</td><td>Terrain</td><td>Size</td>
 	</tr>
 	<xsl:for-each select="cache">
 	<xsl:sort select="name" data-type="text"/>
@@ -170,10 +169,10 @@
 </xsl:template>
 
 <xsl:template match="caches" mode="tocDifficulty">
-	<xsl:if select="$tocTerrain">
+	<xsl:if test="$tocTerrain">
 	<table>
 	<tr>
-	<td>Name</td><td>Difficulty</td><td>Terrain</td><td>Size</td><
+	<td>Name</td><td>Difficulty</td><td>Terrain</td><td>Size</td>
 	</tr>
 	<xsl:for-each select="cache">
 	<xsl:sort select="difficulty" data-type="number"/>
@@ -197,10 +196,10 @@
 </xsl:template>
 
 <xsl:template match="caches" mode="tocTerrain">
-	<xsl:if select="$tocTerrain">
+	<xsl:if test="$tocTerrain">
 	<table>
 	<tr>
-	<td>Name</td><td>Difficulty</td><td>Terrain</td><td>Size</td><
+	<td>Name</td><td>Difficulty</td><td>Terrain</td><td>Size</td>
 	</tr>
 	<xsl:for-each select="cache">
 	<xsl:sort select="terrain" data-type="number"/>

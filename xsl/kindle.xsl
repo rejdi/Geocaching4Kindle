@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding='utf8'?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:output method="html" version="1.0" encoding="utf8" indent="yes"/>
-
 <xsl:import href="kindleGetters.xsl"/>
+<xsl:output method="html" version="1.0" encoding="utf8" indent="yes"/>
 
 <xsl:template match="/">
 
@@ -58,11 +56,11 @@
 
 <div class="shortDescription">
 	<xsl:apply-templates select="short-description"/>
-<div>
+</div>
 
 <div class="longDescription">
 	<xsl:apply-templates select="long-description"/>
-<div>
+</div>
 
 
 <div class="hint">
@@ -73,7 +71,7 @@
 
 <div class="map">
 	<xsl:apply-templates select="map"/>
-<div>
+</div>
 
 <div class="waypoints">
 	<xsl:apply-templates select="waypoint"/>
@@ -82,11 +80,11 @@
 
 <div class="meta">
 	<xsl:apply-templates select="meta"/>
-<div>
+</div>
 
 <div class="attributes">
 	<xsl:apply-templates select="attributes"/>
-<div>
+</div>
 
 <div class="logs">
 	<xsl:apply-templates select="log"/>
