@@ -2,11 +2,11 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:import href="kindleGetters.xsl"/>
-<xsl:output method="html" version="1.0" encoding="utf8" indent="yes"/>
+<xsl:output omit-xml-declaration="no" method="xml" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="utf8" indent="yes"/>
 
 <xsl:template match="/">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xml:lang="en" lang="en">
 <head>
 <title>Geocaching for Kindle</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -15,9 +15,9 @@
 </head>
 <body>
 
-<xsl:apply-templates mode="tocName"/>
-<xsl:apply-templates mode="tocDifficulty"/>
-<xsl:apply-templates mode="tocTerrain"/>
+<xsl:apply-templates select="/" mode="tocName"/>
+<xsl:apply-templates select="/" mode="tocDifficulty"/>
+<xsl:apply-templates select="/" mode="tocTerrain"/>
 
 <xsl:for-each select="cache">
 <div class="cache">

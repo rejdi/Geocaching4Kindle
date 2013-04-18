@@ -24,32 +24,33 @@
 </xsl:template>
 
 <xsl:template match="code">
-	<xsl:attribute name="id" select="."/>
-	<xsl:value-of select="."/>
+	<xsl:variable name="text" select="normalize-space(.)"/>
+	<xsl:attribute name="id"><xsl:value-of select="$text"/></xsl:attribute>
+	<xsl:value-of select="$text"/>
 </xsl:template>
 
 <xsl:template match="location">
-	<xsl:value-of select="."/>
+	<xsl:value-of select="normalize-space(.)"/>
 </xsl:template>
 
 <xsl:template match="locationUTM">
-	<xsl:value-of select="."/>
+	<xsl:value-of select="normalize-space(.)"/>
 </xsl:template>
 
 <xsl:template match="name">
-	<xsl:value-of select="."/>
+	<xsl:value-of select="normalize-space(.)"/>
 </xsl:template>
 
 <xsl:template match="type">
-	<xsl:value-of select="."/>
+	<xsl:value-of select="normalize-space(.)"/>
 </xsl:template>
 
 <xsl:template match="link">
-	<xsl:value-of select="."/>
+	<a href="{normalize-space(.)}"><xsl:value-of select="normalize-space(.)"/></a>
 </xsl:template>
 
 <xsl:template match="author">
-	<xsl:value-of select="."/>
+	<xsl:value-of select="normalize-space(.)"/>
 </xsl:template>
 
 <xsl:template match="difficulty">
@@ -141,8 +142,8 @@
 	</xsl:if>
 </xsl:template>
 
-<xsl:template match="caches" mode="tocName">
-	<xsl:if test="$tocTerrain">
+<xsl:template match="/" mode="tocName">
+	<xsl:if test="$tocName">
 	<table>
 	<tr>
 	<td>Name</td><td>Difficulty</td><td>Terrain</td><td>Size</td>
@@ -151,7 +152,7 @@
 	<xsl:sort select="name" data-type="text"/>
 	<tr>
 		<td>
-			<a href="#{code}"><xsl:value-of select="name"/></a>
+			<a href="#{normalize-space(code)}"><xsl:value-of select="normalize-space(name)"/></a>
 		</td>
 		<td>
 			<xsl:value-of select="difficulty"/>
@@ -168,8 +169,8 @@
 	</xsl:if>
 </xsl:template>
 
-<xsl:template match="caches" mode="tocDifficulty">
-	<xsl:if test="$tocTerrain">
+<xsl:template match="/" mode="tocDifficulty">
+	<xsl:if test="$tocDifficulty">
 	<table>
 	<tr>
 	<td>Name</td><td>Difficulty</td><td>Terrain</td><td>Size</td>
@@ -178,7 +179,7 @@
 	<xsl:sort select="difficulty" data-type="number"/>
 	<tr>
 		<td>
-			<a href="#{code}"><xsl:value-of select="name"/></a>
+			<a href="#{normalize-space(code)}"><xsl:value-of select="normalize-space(name)"/></a>
 		</td>
 		<td>
 			<xsl:value-of select="difficulty"/>
@@ -195,7 +196,7 @@
 	</xsl:if>
 </xsl:template>
 
-<xsl:template match="caches" mode="tocTerrain">
+<xsl:template match="/" mode="tocTerrain">
 	<xsl:if test="$tocTerrain">
 	<table>
 	<tr>
@@ -205,7 +206,7 @@
 	<xsl:sort select="terrain" data-type="number"/>
 	<tr>
 		<td>
-			<a href="#{code}"><xsl:value-of select="name"/></a>
+			<a href="#{normalize-space(code)}"><xsl:value-of select="normalize-space(name)"/></a>
 		</td>
 		<td>
 			<xsl:value-of select="difficulty"/>
