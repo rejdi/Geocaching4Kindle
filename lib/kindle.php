@@ -28,11 +28,7 @@ function createKindle($session_id, $intermediate, $codes, $settings) {
 	file_put_contents($htmlfile, $kindleOut->transformToXML($intermediate));
 	
 	foreach ($codes as $code) {
-		shell_exec('ln cache/'.$code.'/*.jpg result/'.$session_id.'/');
-		shell_exec('ln cache/'.$code.'/*.gif result/'.$session_id.'/');
-		shell_exec('ln cache/'.$code.'/*.png result/'.$session_id.'/');
-		shell_exec('ln cache/'.$code.'/*.css result/'.$session_id.'/');
-		shell_exec('ln cache/'.$code.'/*.js result/'.$session_id.'/');
+		shell_exec('ln cache/'.$code.'/* result/'.$session_id.'/');
 	}
 	
 	$command = 'kindlegen -c2 -o '.$mobifile.' '.$htmlfile;
