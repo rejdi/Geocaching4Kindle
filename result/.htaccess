@@ -1,0 +1,5 @@
+Options All -Indexes
+Deny From All 
+<Files result.mobi>
+Allow From All 
+</Files>
