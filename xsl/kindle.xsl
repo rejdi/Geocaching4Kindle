@@ -62,9 +62,7 @@
 	<xsl:apply-templates select="long-description"/>
 </div>
 
-
 <div class="hint">
-	<h3>Hint</h3>
 	<xsl:apply-templates select="hintEncrypted"/>
 	<xsl:apply-templates select="hintDecrypted"/>
 	<xsl:apply-templates select="hintKey"/>
@@ -78,19 +76,15 @@
 	<xsl:apply-templates select="waypoint"/>
 </div>
 
-
 <div class="meta">
-	<h3>Meta</h3>
 	<xsl:apply-templates select="meta"/>
 </div>
 
 <div class="attributes">
-	<h3>Attributes</h3>
 	<xsl:apply-templates select="attributes"/>
 </div>
 
 <div class="logs">
-	<h3>Logs</h3>
 	<xsl:apply-templates select="log"/>
 </div>
 

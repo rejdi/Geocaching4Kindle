@@ -81,7 +81,7 @@ if ($settings['type'] == 'list') {
 	$process = array();
 	foreach ($codes as $code) {
 		logg($session_id, 'Downloading... ' . $code);
-		$result = fetchPrint($cookiefile, $code, (boolean)$settings['outputKindle']['withImages'], 10);
+		$result = fetchPrint($cookiefile, $code);
 		if (empty($result)) {
 			logg($session_id, 'Failed to download ' . $code . ', skipping ...');
 			continue;

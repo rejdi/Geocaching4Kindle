@@ -101,12 +101,14 @@
 
 <xsl:template match="hintEncrypted">
 	<xsl:if test="$hints and not($solveHint)">
+		<h3>Hint</h3>
 		<xsl:value-of select="."/>
 	</xsl:if>
 </xsl:template>
 
 <xsl:template match="hintDecrypted">
 	<xsl:if test="$hints and $solveHint">
+		<h3>Hint</h3>
 		<xsl:value-of select="."/>
 	</xsl:if>
 </xsl:template>
@@ -131,6 +133,10 @@
 
 <xsl:template match="log">
 	<xsl:if test="position() &lt;= $logs">
+		<xsl:if test="position() = 1">
+			<h3>Logs</h3>
+		</xsl:if>
+	
 		<h3 class="log_{position() mod 2}"> 
 		<span class="type">[<xsl:value-of select="type"/>]</span><span class="time">[<xsl:value-of select="time"/>]</span><span class="user">[<xsl:value-of select="user"/>]</span>
 		</h3>
@@ -142,12 +148,14 @@
 
 <xsl:template match="meta">
 	<xsl:if test="$meta">
+		<h3>Meta</h3>
 		<xsl:value-of select="."/>
 	</xsl:if>
 </xsl:template>
 
 <xsl:template match="attributes">
 	<xsl:if test="$attributes">
+		<h3>Attributes</h3>
 		<xsl:value-of select="."/>
 	</xsl:if>
 </xsl:template>

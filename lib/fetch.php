@@ -2,7 +2,7 @@
 //gets document from uri, retrieve it with images if wanted and saves it to cache
 //in format of /cache/$gccode/file.html
 //             /cache/$gccode/images/*
-function fetchPrint($cookiefile, $gccode, $withImages, $comments) {
+function fetchPrint($cookiefile, $gccode) {
 	//consider skipping file, if cached dir already exists. Don't forget to remove directory upon failed download(!)
 	global $session_id;
 	$file = 'cache/' . $gccode . '/' . $gccode . '.html';
@@ -24,7 +24,7 @@ function fetchPrint($cookiefile, $gccode, $withImages, $comments) {
 	}
 	unlink($file);
 	
-	$remoteFile = 'cdpf.aspx?guid='.$res.'&lc=' . $comments;
+	$remoteFile = 'cdpf.aspx?guid='.$res.'&lc=10';
 	$file = 'cache/'.$gccode . '/' . $remoteFile . '.html';
 	
 	//skip download, if file already exists
@@ -32,12 +32,14 @@ function fetchPrint($cookiefile, $gccode, $withImages, $comments) {
 		return $file;
 	}
 	
-	$command = 'wget -a result/'.$session_id.'/wget.log -nd -E -H -k'.(($withImages == true) ? ' -p' : '').' -P cache/'.$gccode.' --load-cookies '.$cookiefile." --random-wait --timeout=5 --tries=3 'http://www.geocaching.com/seek/".$remoteFile."'";
+	$command = 'wget -a result/'.$session_id.'/wget.log -nd -E -H -k -p -P cache/'.$gccode.' --load-cookies '.$cookiefile." --random-wait --timeout=5 --tries=3 'http://www.geocaching.com/seek/".$remoteFile."'";
 	
 	//logg($session_id, $command);
 	if (exec($command) != 0) {
 		return null;
 	}
+	
+	file_put_contents($file, str_replace("\r", '', file_get_contents($file)));
 	
 	return $file;
 }

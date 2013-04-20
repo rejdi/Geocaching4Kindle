@@ -1,5 +1,4 @@
 .toc {
-	width: 90%;
 	margin: 10px auto;
 	padding: 0;
 	border: 0;
@@ -36,8 +35,9 @@ img {
 	float: right;
 	font-weight: bold;
 	font-size: 120%;
-	color: #AAA;
+	color: #888;
 	font-style: italic;
+	margin-left: 10px;
 }
 
 .cache h2 {
