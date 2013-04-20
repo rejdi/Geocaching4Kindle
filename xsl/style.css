@@ -1,0 +1,119 @@
+.toc {
+	width: 90%;
+	margin: 10px auto;
+	padding: 0;
+	border: 0;
+}
+
+.toc tr, .toc td {
+	margin: 0;
+	border: none;
+	padding: 0;
+}
+
+.toc td {
+	padding: 3px;
+}
+
+.toc tr:first-child {
+	font-weight: bold;
+	background-color: #CCC;
+}
+
+.toc .sorted_column {
+	background-color: #DDD;
+}
+
+img {
+	display: none;
+}
+
+.cache {
+	border-top: 2px solid #CCC;
+}
+
+.cache .code {
+	float: right;
+	font-weight: bold;
+	font-size: 120%;
+	color: #AAA;
+	font-style: italic;
+}
+
+.cache h2 {
+	margin: 10px 10px 0 0;
+	padding: 0;
+}
+
+.cache .author {
+	font-size: 70%;
+	font-style: italic;
+}
+
+.cache .link {
+	margin: 0 5px 0 0;
+	float: left;
+}
+
+.cache .location {
+	display: block;
+	font-style: italic;
+}
+
+.cache .terrain, .cache .difficulty {
+	margin-right: 10px;
+}
+
+.cache .shortDescription {
+	margin: 10px 0;
+}
+
+.cache .longDescription {
+	margin: 10px 0;
+}
+
+.cache .hint {
+	background-color: #EEE;
+	padding: 5px;
+	font-family: courier;
+}
+
+.cache .hint h3 {
+	padding: 0;
+	margin: 0;
+	font-family: serif;
+}
+
+.cache .logs .type {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.cache .logs .user {
+	font-style: italic;
+	margin-right: 10px;
+}
+
+.cache .logs .time {
+	margin-right: 10px;
+}
+
+.cache .logs .log_1 {
+	margin: 0;
+	padding: 5px 0;
+	background-color: #DDD;
+}
+
+.cache .logs .log_0 {
+	margin: 0;
+	padding: 5px 0;
+}
+
+.cache .logs h3.log_0, .cache .logs h3.log_1 {
+	font-size: 100%;
+}
+
+.cache .logs .comment dd {
+	padding: 0;
+	margin: 0;
+}

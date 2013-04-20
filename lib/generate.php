@@ -2,6 +2,7 @@
 require_once 'lib/log.php';
 require_once 'lib/login.php';
 require_once 'lib/fetch.php';
+require_once 'lib/intermediate.php';
 require_once 'lib/kindle.php';
 require_once 'lib/gpx.php';
 require_once 'lib/loc.php';
@@ -11,6 +12,8 @@ if ($argc > 0) {
 	if ($settings == false) {
 		exit(1);
 	}
+} else {
+	exit(1);
 }
 
 /*
@@ -54,10 +57,10 @@ $settings = array of
 	$map
 */
 $session_id = $settings['session'];
-
 system('rm -rf result/'.$session_id);
 mkdir('result/'.$session_id);
-//logg($session_id, print_r($settings, true));
+// logg($session_id, print_r($settings, true));
+// logg($session_id, $argv[1]);
 logg($session_id, 'Logging in...');
 $cookiefile = login($settings['user'], $settings['pass'], $session_id);
 
@@ -85,22 +88,17 @@ if ($settings['type'] == 'list') {
 		}
 		$process[] = $result;
 	}
-	//TODO: processing faza
-	$xml = new DOMDocument();
-	$xsl = new DOMDocument();
-	$xsl->load('xsl/intermediate.xsl');
-	$xslt = new XSLTProcessor();
-	$xslt->importStylesheet($xsl);
-	$root = $xml->appendChild($xml->createElement('caches'));
-	foreach ($process as $cache) {
-		$file = DOMDocument::loadHTMLFile($cache);
-		$root->appendChild($xslt->transformToDoc());
+	
+	logg($session_id, 'Creating intermediate format...');
+	$intermediate = createIntermediate($process);
+	logg($session_id, 'Creating kindle output...');
+	$res = createKindle($session_id, $intermediate, $codes, $settings['outputKindle']);
+	if (!$res) {
+		logg($session_id, '!Failed to create kindle output!');
 	}
-	kindleOut = new XSLTProcessor();
-	kindleOut->importStylesheet('xsl/kindle.xsl');
-	createKindle($session_id, $process, $settings['outputKindle']);
-	createGPX($session_id, $process, $settings['outputGPX']);
-	createLOC($session_id, $process, $settings['outputLOC']);
+	//createGPX($session_id, $process, $settings['outputGPX']);
+	//createLOC($session_id, $process, $settings['outputLOC']);
+	logg($session_id, 'Done.');
 } else if ($settings['type'] == 'point') {
 	//TODO
 }

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding='utf8'?>
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
+	xmlns:func="http://exslt.org/functions"
+	extension-element-prefixes="func fn">
 <xsl:output method="xml" version="1.0" encoding="utf8" indent="yes"/>
 <xsl:template match="/">
 <cache>
-<code><xsl:value-of select="//div[@class='HalfRight AlignRight']/h1"/></code>
+<code><xsl:value-of select="normalize-space(//div[@class='HalfRight AlignRight']/h1)"/></code>
 <location><xsl:value-of select="//p[@class='LatLong Meta']"/></location>
 <locationUTM><xsl:value-of select="//p[@class='UTM Meta']"/></locationUTM>
 <name><xsl:value-of select="//div[@id='Content']/h2"/></name>
@@ -33,11 +37,11 @@
 <hintKey><xsl:value-of select="//span[@class='EncryptionKey HalfRight']/blockquote"/></hintKey>
 
 <short-description>
-	<xsl:copy-of select="//div[@class='item']//h2[contains(., 'Short')]/../../div[@class='item-content']/*"/>
+	<xsl:copy-of select="//div[@class='item']//h2[contains(., 'Short')]/../../div[@class='item-content']"/>
 </short-description>
 
 <long-description>
-	<xsl:copy-of select="//div[@class='item']//h2[contains(., 'Long')]/../../div[@class='item-content']/*"/>
+	<xsl:copy-of select="//div[@class='item']//h2[contains(., 'Long')]/../../div[@class='item-content']"/>
 </long-description>
 
 
@@ -51,7 +55,7 @@
 	</user>
 	<comment>
 		<xsl:variable name="pos" select="position()"/>
-		<xsl:value-of select="../dd[$pos]"/>
+		<xsl:copy-of select="../dd[$pos]"/>
 	</comment>
 	<time>
 		<xsl:value-of select="substring-before(normalize-space(substring-after(., ']')), ' by ')"/>
@@ -82,7 +86,11 @@
 
 <!-- Toto bude musiet byt spravene cez JS a kindlegen si s tym bude musiet poradit. -> cize naincludovat skripty//-->
 <map>
-	<xsl:copy-of select="//script"/>
+	<xsl:variable name="details" select="normalize-space(substring-before(substring-after(//script[contains(., 'lat=')], 'CDATA['), '//]]'))"/>
+	<xsl:value-of select="$details"/>
+	<lat><xsl:value-of select="substring-before(substring-after($details, 'lat='), ',')"/></lat>
+	<lng><xsl:value-of select="substring-before(substring-after($details, 'lng='), ',')"/></lng>
+	<wptid><xsl:value-of select="substring-before(substring-after($details, 'wptid='), ',')"/></wptid>
 </map>
 
 <!-- wtf? //-->
