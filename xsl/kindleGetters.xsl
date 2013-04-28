@@ -42,7 +42,12 @@
 </xsl:template>
 
 <xsl:template match="type">
-	<xsl:value-of select="normalize-space(.)"/>
+	<xsl:if test="$withImages">
+		<img src="{normalize-space(img)}"/>
+	</xsl:if>
+	<xsl:if test="not($withImages)">
+		<xsl:value-of select="normalize-space(text)"/>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template match="link">

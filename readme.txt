@@ -30,3 +30,20 @@ hlavny kod by bolo php, co bude robit aj webovy vstup / vystup
 kindlegen - generovanie vystupu pre kindle z html
 xslt sablony na preparsovanie vstupu z webu, vyhodenie somarin, generovanie poi, generovanie gpx
 wget na masove stiahnutie html + obrazkov
+
+
+GPX
+treba doplnit
+
+- suradnice v systeme XX.YYYYY (su sucastou <map>)
+- cas vytvorenia kese (ten este skonvertovat)
+- groundspeak:cache_id - 6 miestne cislo povedzme (toto je len v non-print verzii)
+- ci je dostupna (toto je len v non-print verzii)
+- ci je archivovana (toto je ASI len v non-print verzii. Este som taku nevidel)
+- <groundspeak:encoded_hints>Buxus sempervirensis</groundspeak:encoded_hints>
+- logs
+  - id - dlhe cislo	(toto je len v non-print verzii)
+  - finder id - uuid (toto je len v non-print verzii)
+- waypoints
+  - pozicia XX.YYYY
+  

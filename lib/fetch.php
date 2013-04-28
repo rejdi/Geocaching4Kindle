@@ -6,6 +6,7 @@ function fetchPrint($cookiefile, $gccode) {
 	//consider skipping file, if cached dir already exists. Don't forget to remove directory upon failed download(!)
 	global $session_id;
 	$file = 'cache/' . $gccode . '/' . $gccode . '.html';
+	unlink($file);
 	mkdir('cache/' . $gccode);
 	$command = 'wget -a	 result/'.$session_id.'/wget.log -O "'.$file.'" -E -H -k -P cache/ --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 http://www.geocaching.com/seek/cache_details.aspx?wp=' . $gccode;
 	
@@ -22,7 +23,6 @@ function fetchPrint($cookiefile, $gccode) {
 	if (strlen($res) != 36) {
 		return null;
 	}
-	unlink($file);
 	
 	$remoteFile = 'cdpf.aspx?guid='.$res.'&lc=10';
 	$file = 'cache/'.$gccode . '/' . $remoteFile . '.html';

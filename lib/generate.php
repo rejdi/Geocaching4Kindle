@@ -91,6 +91,7 @@ if ($settings['type'] == 'list') {
 	
 	logg($session_id, 'Creating intermediate format...');
 	$intermediate = createIntermediate($process);
+	$intermediate->save('result/'.$session_id.'/intermediate.xml');
 	logg($session_id, 'Creating kindle output...');
 	$res = createKindle($session_id, $intermediate, $codes, $settings['outputKindle']);
 	if (!$res) {

@@ -12,8 +12,12 @@
 <location><xsl:value-of select="//p[@class='LatLong Meta']"/></location>
 <locationUTM><xsl:value-of select="//p[@class='UTM Meta']"/></locationUTM>
 <name><xsl:value-of select="//div[@id='Content']/h2"/></name>
-<type><xsl:value-of select="//div[@id='Content']/h2/img/@alt"/></type>
+<type>
+<img><xsl:value-of select="//div[@id='Content']/h2/img/@src"/></img>
+<text><xsl:value-of select="//div[@id='Content']/h2/img/@alt"/></text>
+</type>
 <link>http://www.geocaching.com/seek/cdpf.aspx?guid=<xsl:value-of select="substring-before(substring-after(//form[@name='Form1' and @id='Form1']/@action, 'guid='), '.html')"/></link>
+<date><xsl:value-of select="substring-after(//p[@class='Meta' and substring(normalize-space(text()),1,10)='Placed Date: '], 'Placed Date: ')"/></date>
 <author><xsl:value-of select="substring-after(//p[@class='Meta' and substring(normalize-space(text()),1,10)='Placed by:'], 'Placed by:')"/></author>
 
 <!-- WTF je hidden? //-->
