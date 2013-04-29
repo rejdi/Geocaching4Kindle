@@ -167,17 +167,19 @@
 
 <xsl:template match="map">
 	<xsl:if test="$map and $withImages">
+		<h3>Map</h3>
 		<img src="map_{normalize-space(../code)}.png"/>
 	</xsl:if>
 </xsl:template>
 
 <xsl:template match="waypoint">
 	<xsl:if test="$additionalWaypoints">
-		<!-- you have to place div id="map" inside result //-->
-		<h3><xsl:value-of select="name"/></h3>
-		<h4>(<xsl:value-of select="prefix"/>) <xsl:value-of select="lookup"/></h4>
-		<span class="position"><xsl:value-of select="name"/></span>
+		<div class="waypoint">
+		<h4><xsl:value-of select="name"/></h4>
+		<h5>(<xsl:value-of select="prefix"/>) <xsl:value-of select="lookup"/></h5>
+		<span class="position"><xsl:value-of select="position"/></span>
 		<p class="note"><xsl:value-of select="note"/></p>
+		</div>
 	</xsl:if>
 </xsl:template>
 

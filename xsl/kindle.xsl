@@ -73,6 +73,9 @@
 </div>
 
 <div class="waypoints">
+	<xsl:if test="$map and $withImages and waypoint">
+		<h3>Waypoints</h3>
+	</xsl:if>
 	<xsl:apply-templates select="waypoint"/>
 </div>
 
