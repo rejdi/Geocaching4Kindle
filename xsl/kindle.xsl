@@ -26,8 +26,8 @@
 </span>
 
 <h2>
+	<xsl:apply-templates select="type"/>
 	<xsl:apply-templates select="name"/>
-	[<xsl:apply-templates select="type"/>]
 </h2>
 
 <span class="author">

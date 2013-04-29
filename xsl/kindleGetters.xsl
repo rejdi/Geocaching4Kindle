@@ -191,7 +191,11 @@
 	<xsl:sort select="name" data-type="text"/>
 	<tr>
 		<td class="sorted_column">
-			<a href="#{normalize-space(code)}">(<xsl:value-of select="normalize-space(code)"/>)<xsl:value-of select="normalize-space(name)"/></a>
+			<a href="#{normalize-space(code)}">
+			<xsl:if test="$withImages">
+			<xsl:apply-templates select="type"/>
+			</xsl:if>
+			(<xsl:value-of select="normalize-space(code)"/>)<xsl:value-of select="normalize-space(name)"/></a>
 		</td>
 		<td>
 			<xsl:value-of select="difficulty"/>
@@ -218,7 +222,11 @@
 	<xsl:sort select="difficulty" data-type="number"/>
 	<tr>
 		<td>
-			<a href="#{normalize-space(code)}">(<xsl:value-of select="normalize-space(code)"/>)<xsl:value-of select="normalize-space(name)"/></a>
+			<a href="#{normalize-space(code)}">
+			<xsl:if test="$withImages">
+			<xsl:apply-templates select="type"/>
+			</xsl:if>
+			(<xsl:value-of select="normalize-space(code)"/>)<xsl:value-of select="normalize-space(name)"/></a>
 		</td>
 		<td class="sorted_column">
 			<xsl:value-of select="difficulty"/>
@@ -245,7 +253,11 @@
 	<xsl:sort select="terrain" data-type="number"/>
 	<tr>
 		<td>
-			<a href="#{normalize-space(code)}">(<xsl:value-of select="normalize-space(code)"/>)<xsl:value-of select="normalize-space(name)"/></a>
+			<a href="#{normalize-space(code)}">
+			<xsl:if test="$withImages">
+			<xsl:apply-templates select="type"/>
+			</xsl:if>
+			(<xsl:value-of select="normalize-space(code)"/>)<xsl:value-of select="normalize-space(name)"/></a>
 		</td>
 		<td>
 			<xsl:value-of select="difficulty"/>
