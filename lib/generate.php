@@ -79,8 +79,10 @@ if ($settings['type'] == 'list') {
 	}
 	
 	$process = array();
+	$i = 1;
 	foreach ($codes as $code) {
-		logg($session_id, 'Downloading... ' . $code);
+		logg($session_id, 'Downloading... (' . $i . '/' . $count($codes) . ') ' . $code);
+		$i++;
 		$result = fetchPrint($cookiefile, $code);
 		if (empty($result)) {
 			logg($session_id, 'Failed to download ' . $code . ', skipping ...');
