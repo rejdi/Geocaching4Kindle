@@ -21,7 +21,9 @@ function createKindle($session_id, $intermediate, $codes, $settings) {
 		$sxml = simplexml_import_dom($intermediate);
 		$caches = $sxml->xpath('//cache');
 		foreach ($caches as $cache) {
-			fetch('http://maps.google.com/maps/api/staticmap?zoom=14&size=640x480&maptype=roadmap&markers=icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png|'.$cache->map->lat.','.$cache->map->lng.'&sensor=false', 'result/'.$session_id.'/map_'.$cache->code.'.png');
+			//google mapy
+			//fetch('http://maps.google.com/maps/api/staticmap?zoom=14&size=640x480&maptype=roadmap&markers=icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png|'.$cache->map->lat.','.$cache->map->lng.'&sensor=false', 'result/'.$session_id.'/map_'.$cache->code.'.png');
+			fetch('staticmap/staticmap.php?zoom=14&size=640x480&maptype=hike&markers='.$cache->map->lat.','.$cache->map->lng.',icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png&sensor=false', 'result/'.$session_id.'/map_'.$cache->code.'.png');
 		}
 	}
 	
