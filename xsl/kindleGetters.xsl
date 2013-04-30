@@ -97,10 +97,10 @@
 
 <xsl:template match="size">
 	<xsl:if test="not($withImages)">
-		<xsl:value-of select="."/>
+		<xsl:value-of select="text"/>
 	</xsl:if>
 	<xsl:if test="$withImages">
-		<img src="{translate(normalize-space(text()), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')}.gif"/>
+		<img src="{img}"/>
 	</xsl:if>
 </xsl:template>
 

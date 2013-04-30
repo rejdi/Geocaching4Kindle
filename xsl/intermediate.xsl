@@ -32,8 +32,8 @@
 </terrain>
 
 <size>
-	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third']/p[@class='Meta']/img/@alt),' out of')"/>
-	<xsl:value-of select="substring-after(substring-before(//div[@class='Third']/p[@class='Meta']/img[substring-before(@alt,':')='Size']/../small,')'),'(')"/>
+	<img><xsl:value-of select="//div[@class='Third']/p[@class='Meta']/img[substring-before(@alt,':')='Size']/@src"/></img>
+	<text><xsl:value-of select="substring-after(substring-before(//div[@class='Third']/p[@class='Meta']/img[substring-before(@alt,':')='Size']/../small,')'),'(')"/></text>
 </size>
 
 <hintEncrypted><xsl:value-of select="//div[@id='uxDecryptedHint']"/></hintEncrypted>
