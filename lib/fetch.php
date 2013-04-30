@@ -8,7 +8,7 @@ function fetchPrint($cookiefile, $gccode) {
 	$file = 'cache/' . $gccode . '/' . $gccode . '.html';
 	unlink($file);
 	mkdir('cache/' . $gccode);
-	$command = 'wget -a	 result/'.$session_id.'/wget.log -O "'.$file.'" -E -H -k -P cache/ --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 http://www.geocaching.com/seek/cache_details.aspx?wp=' . $gccode;
+	$command = 'wget -a result/'.$session_id.'/wget.log -O "'.$file.'" -E -H -k -P cache/ --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 http://www.geocaching.com/seek/cache_details.aspx?wp=' . $gccode;
 	
 	//logg($session_id, $command);
 	

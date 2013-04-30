@@ -23,7 +23,7 @@ function createKindle($session_id, $intermediate, $codes, $settings) {
 		foreach ($caches as $cache) {
 			//google mapy
 			//fetch('http://maps.google.com/maps/api/staticmap?zoom=14&size=640x480&maptype=roadmap&markers=icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png|'.$cache->map->lat.','.$cache->map->lng.'&sensor=false', 'result/'.$session_id.'/map_'.$cache->code.'.png');
-			fetch('staticmap/staticmap.php?zoom=14&size=640x480&maptype=hike&markers='.$cache->map->lat.','.$cache->map->lng.',icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png&sensor=false', 'result/'.$session_id.'/map_'.$cache->code.'.png');
+			fetch($session_id, 'http://localhost/gc/staticmaplite/staticmap.php?zoom=14&size=640x480&maptype=hike&markers='.$cache->map->lat.','.$cache->map->lng.',icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png&sensor=false&center='.$cache->map->lat.','.$cache->map->lng, 'result/'.$session_id.'/map_'.$cache->code.'.png');
 		}
 	}
 	
@@ -41,8 +41,8 @@ function createKindle($session_id, $intermediate, $codes, $settings) {
 	return true;
 }
 
-function fetch($url, $file) {
-	$command = 'wget -o /dev/null -O "'.$file.'" --random-wait --timeout=5 --tries=3 '.$url;
+function fetch($session_id, $url, $file) {
+	$command = 'wget -a result/' . $session_id . '/wget.log -O "'.$file.'" --random-wait --timeout=5 --tries=3 '.$url;
 	if (exec(escapeshellcmd($command)) != 0) {
 		return null;
 	}
