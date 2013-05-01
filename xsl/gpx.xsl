@@ -62,6 +62,18 @@
 	<groundspeak:long_description html="True">
 		<xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
 			<xsl:copy-of select="long-description/*"/>
+			
+			<xsl:if test="waypoint">
+			<p>Additional waypoints:
+			<xsl:for-each select="waypoint">
+				<br/>
+				<xsl:value-of select="normalize-space(name)"/>
+				(<xsl:value-of select="normalize-space(lookup)"/>):
+				<xsl:value-of select="normalize-space(note)"/>
+			</xsl:for-each>
+			</p>
+			</xsl:if>
+			
 		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	</groundspeak:long_description>
 	<groundspeak:encoded_hints>
@@ -91,6 +103,18 @@
 
 </wpt>
 </xsl:for-each>
+
+<xsl:for-each select="//cache[not(count(waypoint/lat) = 0)]">
+<rte>
+	<name><xsl:value-of select="normalize-space(name)"/></name>
+	<xsl:for-each select="waypoint[lat]">
+		<rtept lat="{lat}" lon="{lon}">
+			<name><xsl:value-of select="normalize-space(name)"/></name>
+		</rtept>
+	</xsl:for-each>
+</rte>
+</xsl:for-each>
+
 </gpx>
 </xsl:template>
 </xsl:stylesheet>

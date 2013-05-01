@@ -97,9 +97,13 @@ if ($settings['type'] == 'list') {
 	logg($session_id, 'Creating kindle output...');
 	$res = createKindle($session_id, $intermediate, $codes, $settings['outputKindle']);
 	if (!$res) {
-		logg($session_id, '!Failed to create kindle output!');
+		logg($session_id, 'Failed to create kindle output!');
 	}
-	//createGPX($session_id, $process, $settings['outputGPX']);
+	logg($session_id, 'Creating gpx output...');
+	$res = createGPX($session_id, $intermediate, $settings['outputGPX']);
+	if (!$res) {
+		logg($session_id, 'Failed to create gpx output!');
+	}
 	//createLOC($session_id, $process, $settings['outputLOC']);
 	logg($session_id, 'Done.');
 } else if ($settings['type'] == 'point') {

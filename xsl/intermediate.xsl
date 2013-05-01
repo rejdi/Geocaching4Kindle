@@ -4,6 +4,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 	xmlns:func="http://exslt.org/functions"
+	xmlns:php="http://php.net/xsl"
 	extension-element-prefixes="func fn">
 <xsl:output method="xml" version="1.0" encoding="utf8" indent="yes"/>
 <xsl:template match="/">
@@ -69,6 +70,8 @@
 
 <xsl:for-each select="//table[@id='Waypoints']/tbody/tr[@ishidden='false']">
 <waypoint>
+	<xsl:variable name="details" select="normalize-space(td[7])"/>
+	<xsl:value-of select="php:function('DMStoDec', $details)" disable-output-escaping="yes"/>
 	<prefix><xsl:value-of select="td[4]"/></prefix>
 	<lookup><xsl:value-of select="td[5]"/></lookup>
 	<name><xsl:value-of select="td[6]"/></name>
@@ -91,7 +94,6 @@
 <!-- Toto bude musiet byt spravene cez JS a kindlegen si s tym bude musiet poradit. -> cize naincludovat skripty//-->
 <map>
 	<xsl:variable name="details" select="normalize-space(substring-before(substring-after(//script[contains(., 'lat=')], 'CDATA['), '//]]'))"/>
-	<xsl:value-of select="$details"/>
 	<lat><xsl:value-of select="substring-before(substring-after($details, 'lat='), ',')"/></lat>
 	<lng><xsl:value-of select="substring-before(substring-after($details, 'lng='), ',')"/></lng>
 	<wptid><xsl:value-of select="substring-before(substring-after($details, 'wptid='), ',')"/></wptid>
