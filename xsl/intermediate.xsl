@@ -95,7 +95,7 @@
 <map>
 	<xsl:variable name="details" select="normalize-space(substring-before(substring-after(//script[contains(., 'lat=')], 'CDATA['), '//]]'))"/>
 	<lat><xsl:value-of select="substring-before(substring-after($details, 'lat='), ',')"/></lat>
-	<lng><xsl:value-of select="substring-before(substring-after($details, 'lng='), ',')"/></lng>
+	<lon><xsl:value-of select="substring-before(substring-after($details, 'lng='), ',')"/></lon>
 	<wptid><xsl:value-of select="substring-before(substring-after($details, 'wptid='), ',')"/></wptid>
 </map>
 
