@@ -1,5 +1,5 @@
 Options All -Indexes
 Deny From All 
-<Files result.mobi result.gpx>
+<Files result.*>
 Allow From All 
 </Files>
