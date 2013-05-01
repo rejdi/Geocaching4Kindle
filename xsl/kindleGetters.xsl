@@ -206,7 +206,7 @@
 			<xsl:value-of select="terrain"/>
 		</td>
 		<td>
-			<xsl:value-of select="size"/>
+			<xsl:value-of select="size/text"/>
 		</td>
 	</tr>
 	</xsl:for-each>
@@ -237,7 +237,7 @@
 			<xsl:value-of select="terrain"/>
 		</td>
 		<td>
-			<xsl:value-of select="size"/>
+			<xsl:value-of select="size/text"/>
 		</td>
 	</tr>
 	</xsl:for-each>
@@ -268,7 +268,7 @@
 			<xsl:value-of select="terrain"/>
 		</td>
 		<td>
-			<xsl:value-of select="size"/>
+			<xsl:value-of select="size/text"/>
 		</td>
 	</tr>
 	</xsl:for-each>
