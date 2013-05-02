@@ -20,6 +20,7 @@
 <xsl:apply-templates select="/caches" mode="tocTerrain"/>
 
 <xsl:for-each select="cache">
+<hr />
 <div class="cache">
 <span class="code">
 	<xsl:apply-templates select="code"/>
