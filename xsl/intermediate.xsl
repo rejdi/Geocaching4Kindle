@@ -6,7 +6,7 @@
 	xmlns:func="http://exslt.org/functions"
 	xmlns:php="http://php.net/xsl"
 	extension-element-prefixes="func fn">
-<xsl:output method="xml" version="1.0" encoding="utf8" indent="yes"/>
+<xsl:output method="xml" version="1.0" encoding="utf-8" indent="yes"/>
 <xsl:template match="/">
 <cache>
 <code><xsl:value-of select="normalize-space(//div[@class='HalfRight AlignRight']/h1)"/></code>

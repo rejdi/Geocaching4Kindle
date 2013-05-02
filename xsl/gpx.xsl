@@ -6,7 +6,7 @@
 	xmlns:math="http://exslt.org/math"
 	xmlns:php="http://php.net/xsl"
 	extension-element-prefixes="func fn">
-<xsl:output method="xml" version="1.0" encoding="utf8" indent="yes"/>
+<xsl:output method="xml" version="1.0" encoding="utf-8" indent="yes"/>
 <xsl:template match='/'>
 <!-- <gpx creator="Rejdi" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:groundspeak="http://www.groundspeak.com/cache/1/1"> -->
 <gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.0" creator="Geocaching generator" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.groundspeak.com/cache/1/0 http://www.groundspeak.com/cache/1/0/cache.xsd" xmlns="http://www.topografix.com/GPX/1/0" xmlns:groundspeak="http://www.groundspeak.com/cache/1/0">
