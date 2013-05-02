@@ -1,6 +1,6 @@
 <?php
 
-function normalize_time($time) {
+function normalizeTime($time) {
 	return date('c', strtotime($time));
 }
 
@@ -24,7 +24,7 @@ function wpextract($data, $i) {
 }
 
 function DMStoDec2($deg, $minsec) {
-	file_put_contents('aaa.txt', $deg . ' ' . $minsec . "\n", FILE_APPEND);
+	//file_put_contents('aaa.txt', $deg . ' ' . $minsec . "\n", FILE_APPEND);
 	return $deg+($minsec)/60;
 }
 

@@ -13,7 +13,9 @@ function createIntermediate($files) {
 	foreach ($files as $cache) {
 		$file = new DOMDocument();
 		$file->loadHTMLFile($cache);
-		$tmp = $xml->importNode($xslt->transformToDoc($file)->documentElement, true);
+		$inter = new DOMDocument();
+		$inter->loadXML($xslt->transformToXML($file));
+		$tmp = $xml->importNode($inter->documentElement, true);
 		$root->appendChild($tmp);
 	}
 	return $xml;

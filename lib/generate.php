@@ -94,15 +94,17 @@ if ($settings['type'] == 'list') {
 	logg($session_id, 'Creating intermediate format...');
 	$intermediate = createIntermediate($process);
 	$intermediate->save('result/'.$session_id.'/intermediate.xml');
-	logg($session_id, 'Creating kindle output...');
-	$res = createKindle($session_id, $intermediate, $codes, $settings['outputKindle']);
-	if (!$res) {
-		logg($session_id, 'Failed to create kindle output!');
-	}
+
 	logg($session_id, 'Creating gpx output...');
 	$res = createGPX($session_id, $intermediate, $settings['outputGPX']);
 	if (!$res) {
 		logg($session_id, 'Failed to create gpx output!');
+	}
+
+	logg($session_id, 'Creating kindle output...');
+	$res = createKindle($session_id, $intermediate, $codes, $settings['outputKindle']);
+	if (!$res) {
+		logg($session_id, 'Failed to create kindle output!');
 	}
 	//createLOC($session_id, $process, $settings['outputLOC']);
 	logg($session_id, 'Done.');

@@ -93,7 +93,7 @@
 				<xsl:value-of select="normalize-space(comment)"/>
 			</groundspeak:text>
 			<groundspeak:date>
-				<xsl:value-of select="php:function('normalize_time', normalize-space(time))"/>
+				<xsl:value-of select="php:function('normalizeTime', normalize-space(time))"/>
 			</groundspeak:date>
 		</groundspeak:log>
 		</xsl:for-each>
@@ -102,9 +102,8 @@
 </groundspeak:cache>
 
 </wpt>
-</xsl:for-each>
 
-<xsl:for-each select="//cache[not(count(waypoint/lat) = 0)]">
+<xsl:if test="count(waypoint/lat) &gt; 0">
 <rte>
 	<name><xsl:value-of select="normalize-space(name)"/></name>
 	<xsl:for-each select="waypoint[lat]">
@@ -113,6 +112,8 @@
 		</rtept>
 	</xsl:for-each>
 </rte>
+</xsl:if>
+
 </xsl:for-each>
 
 </gpx>
