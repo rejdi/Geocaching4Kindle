@@ -1,4 +1,4 @@
-vlastny geokindle book
+	vlastny geokindle book
 
 co by to mohlo vediet?
 
@@ -14,6 +14,9 @@ vstup:
 * filter na typ kese
 * filter na obtiaznost
 * filter na teren
+* ci som este nenasiel
+* ci cache existuje
+* typ kese
 
 2. zo zoznamu kesi
 vstup:

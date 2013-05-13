@@ -15,13 +15,29 @@ $settings = array(
 	shell_exec("php lib/generate.php " . escapeshellarg(serialize($settings)) . " >/dev/null &");
 	sleep(1);
 	header('Location: view.php?id=' . $session) ;
+	//print_r($settings);
 	
 	function createPoint() {
-		return array();
+		return array(
+			'city' => $_POST['city'],
+			'locLat' => $_POST['locLat'],
+			'locLong' => $_POST['locLong'],
+			);
 	}
 
 	function createPointFilter() {
-		return array();
+		return array(
+			'limitCount' => $_POST['limitCount'],
+			'limitDistance' => $_POST['limitDistance'],
+			'cacheType' => array_keys($_POST['cacheType']),
+			'difficultyMin' => $_POST['difficultyMin'],
+			'difficultyMax' => $_POST['difficultyMax'],
+			'terrainMin' => $_POST['terrainMin'],
+			'terrainMax' => $_POST['terrainMax'],
+			'notFound' => $_POST['shortDesc'] == 'on',
+			'onlyActive' => $_POST['onlyActive'] == 'on',
+			'skipPremium' => $_POST['skipPremium'] == 'on',
+			);
 	}
 
 	function createOutputKindle() {
