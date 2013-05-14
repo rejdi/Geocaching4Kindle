@@ -53,7 +53,7 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 		
 		$tmpCaches = dumpCaches($file, $conditions);
 		
-		for ($tmpCaches as $key=>$item) {
+		foreach ($tmpCaches as $key=>$item) {
 			if (count($result) <= $max) {
 				break;
 			}
@@ -109,19 +109,19 @@ function buildConditions($pointFilter) {
 	$res .= $types;
 	
 	if (!empty($pointFilter['difficultyMin'])) {
-		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], '/')) &gt= '.$pointFilter['difficultyMin']).']';
+		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], "/")) &gt= '.$pointFilter['difficultyMin'].']';
 	}
 
 	if (!empty($pointFilter['difficultyMax'])) {
-		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], '/')) &lt= '.$pointFilter['difficultyMax']).']';
+		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], "/")) &lt= '.$pointFilter['difficultyMax'].']';
 	}
 
 	if (!empty($pointFilter['terrainMin'])) {
-		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], '/')) &gt= '.$pointFilter['terrainMin']).']';
+		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], "/")) &gt= '.$pointFilter['terrainMin'].']';
 	}
 
 	if (!empty($pointFilter['terrainMax'])) {
-		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], '/')) &lt= '.$pointFilter['terrainMax']).']';
+		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], "/")) &lt= '.$pointFilter['terrainMax'].']';
 	}
 	
 	if (!empty($pointFilter['notFound'])) {
