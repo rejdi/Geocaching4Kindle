@@ -7,7 +7,7 @@ function fetchPrint($session_id, $cookiefile, $gccode) {
 	$file = 'cache/' . $gccode . '/' . $gccode . '.html';
 	unlink($file);
 	mkdir('cache/' . $gccode);
-	$command = 'wget -a result/'.$session_id.'/wget.log -O "'.$file.'" -E -H -k -P cache/ --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 http://www.geocaching.com/seek/cache_details.aspx?wp=' . $gccode;
+	$command = 'wget -a result/'.$session_id.'/wget.log -O "'.$file.'" -E -e robots=off -H -k -P cache/ --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 http://www.geocaching.com/seek/cache_details.aspx?wp=' . $gccode;
 	
 	//logg($session_id, $command);
 	
@@ -150,7 +150,7 @@ function fetchPrintByGuid($session_id, $cookiefile, $gccode, $guid) {
 		return $file;
 	}
 	
-	$command = 'wget -a result/'.$session_id.'/wget.log -nd -E -H -k -p -P cache/'.$gccode.' --load-cookies '.$cookiefile." --random-wait --timeout=5 --tries=3 'http://www.geocaching.com/seek/".$remoteFile."'";
+	$command = 'wget -a result/'.$session_id.'/wget.log -nd -E -e robots=off -H -k -p -P cache/'.$gccode.' --load-cookies '.$cookiefile." --random-wait --timeout=5 --tries=3 'http://www.geocaching.com/seek/".$remoteFile."'";
 	
 	//logg($session_id, $command);
 	if (exec($command) != 0) {
