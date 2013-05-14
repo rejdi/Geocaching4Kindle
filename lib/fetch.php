@@ -66,6 +66,8 @@ function dumpCaches($file, $conditions) {
 	$html = new DOMDocument();
 	$html->loadHTMLFile($file);
 	$sxml = simplexml_import_dom($html);
+	global $session_id;
+	logg($session_id, '//table[@class="SearchResultsTable Table"]//tr[contains(@class, "Data")]' . $conditions);
 	$caches = $sxml->xpath('//table[@class="SearchResultsTable Table"]//tr[contains(@class, "Data")]' . $conditions);
 	$res = array();
 	foreach ($caches as $cache) {
@@ -100,7 +102,7 @@ function buildConditions($pointFilter) {
 	$res = '';
 	$types = '[';
 	foreach ($pointFilter['cacheType'] as $type) {
-		if (count($types) > 1) {
+		if (strlen($types) > 1) {
 			$types .= ' or ';
 		}
 		$types .= 'contains(td[@class="Merge"]/img[@class="SearchResultsWptType"]/@src, "'.$type.'")';
@@ -109,19 +111,19 @@ function buildConditions($pointFilter) {
 	$res .= $types;
 	
 	if (!empty($pointFilter['difficultyMin'])) {
-		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], "/")) &gt= '.$pointFilter['difficultyMin'].']';
+		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], "/")) >= '.$pointFilter['difficultyMin'].']';
 	}
 
 	if (!empty($pointFilter['difficultyMax'])) {
-		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], "/")) &lt= '.$pointFilter['difficultyMax'].']';
+		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], "/")) <= '.$pointFilter['difficultyMax'].']';
 	}
 
 	if (!empty($pointFilter['terrainMin'])) {
-		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], "/")) &gt= '.$pointFilter['terrainMin'].']';
+		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], "/")) >= '.$pointFilter['terrainMin'].']';
 	}
 
 	if (!empty($pointFilter['terrainMax'])) {
-		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], "/")) &lt= '.$pointFilter['terrainMax'].']';
+		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], "/")) <= '.$pointFilter['terrainMax'].']';
 	}
 	
 	if (!empty($pointFilter['notFound'])) {

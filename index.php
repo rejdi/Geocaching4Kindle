@@ -12,6 +12,7 @@ $settings = array(
 	'outputKindle' => createOutputKindle(),
 	);
 
+	//echo serialize($settings);
 	shell_exec("php lib/generate.php " . escapeshellarg(serialize($settings)) . " >/dev/null &");
 	sleep(1);
 	header('Location: view.php?id=' . $session) ;

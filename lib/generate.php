@@ -93,7 +93,7 @@ if ($settings['type'] == 'list') {
 		$process[] = $result;
 	}
 	
-} else if ($settings['type'] == 'point') {
+} else if ($settings['type'] == 'location') {
 	$point = $settings['point'];
 	$pointFilter = $settings['pointFilter'];
 	
