@@ -76,10 +76,6 @@ if (!empty($cookiefile)) {
 $process = array();
 if ($settings['type'] == 'list') {
 	$codes = $settings['codes'];
-	if (empty($codes)) {
-		logg($session_id, 'Empty list, nothing to do.');
-		exit(0);
-	}
 	
 	$i = 1;
 	foreach ($codes as $code) {
@@ -116,6 +112,11 @@ if ($settings['type'] == 'list') {
 		$process[] = $result;
 	}
 
+}
+
+if (empty($process)) {
+	logg($session_id, 'Empty list, nothing to do.');
+	exit(0);
 }
 
 logg($session_id, 'Creating intermediate format...');

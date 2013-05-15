@@ -1,4 +1,6 @@
 <?php
+require_once 'lib/log.php';
+
 //gets document from uri, retrieve it with images if wanted and saves it to cache
 //in format of /cache/$gccode/file.html
 //             /cache/$gccode/images/*
@@ -34,18 +36,19 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 
 	$postfile = 'result/'.$session_id.'/search-post.txt';
 	$result = array();
-	$max = $pointFilter['limitCount'] > 0 ? min($pointFilter['limitCount'], 100) : 100;
+	$max = $pointFilter['limitCount'] > 0 ? min($pointFilter['limitCount'], 100) : 10;
 	$conditions = buildConditions($pointFilter);
 	$dist = empty($pointFilter['limitDist']) ? '' : ('&dist=' . (int)($pointFilter['limitDist'] / 1.6));
-	while (count($result) <= $max) {
+	$i = 0;
+	while (count($result) < $max && $i < 10) {
 		$url = 'http://www.geocaching.com/seek/nearest.aspx?lat=' . $point['locLat'] . '&lng='. $point['locLong'] . $dist;
-		$file = 'result/' . $session_id . '/search.html';
+		$file = 'result/' . $session_id . '/search'.$i.'.html';
 		unlink($file);
-		$res = file_put_contents($postfile, '__EVENTTARGET=&ctl00%24ContentBody%24pgrTop%24lbGoToPage_' . $i);
+		$res = file_put_contents($postfile, '__EVENTTARGET=ctl00%24ContentBody%24pgrTop%24lbGoToPage_' . $i);
 		if (!$res) {
 			break;
 		}
-		
+		logg($session_id, 'Have '.count($result).' caches. Downloading search page ' . ($i+1) . '...');
 		$command = 'wget -a result/' . $session_id . '/wget.log -O "'.$file.'" --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 '.$url;
 		if (exec(escapeshellcmd($command)) != 0) {
 			break;
@@ -54,30 +57,30 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 		$tmpCaches = dumpCaches($file, $conditions);
 		
 		foreach ($tmpCaches as $key=>$item) {
-			if (count($result) <= $max) {
+			if (count($result) >= $max) {
 				break;
 			}
 			$result[$key] = $item;
 		}
+		$i++;
 	}
+	return $result;
 }
 
 function dumpCaches($file, $conditions) {
 	$html = new DOMDocument();
 	$html->loadHTMLFile($file);
 	$sxml = simplexml_import_dom($html);
-	global $session_id;
-	logg($session_id, '//table[@class="SearchResultsTable Table"]//tr[contains(@class, "Data")]' . $conditions);
 	$caches = $sxml->xpath('//table[@class="SearchResultsTable Table"]//tr[contains(@class, "Data")]' . $conditions);
 	$res = array();
 	foreach ($caches as $cache) {
 		$name = $cache->xpath('td[@class="Merge"]/span[@class="small"]');
 		$name = $name[0]->asXML();
 		$name = explode('|', $name);
-		$name = trim($name[1]);
+		$name = trim(str_replace('&#13;', '', $name[1]));
 		$guid = $cache->xpath('td[@class="Merge"]/a[@class="lnk"]/@href');
 		$guid = $guid[0]->asXML();
-		$guid = substr($guid, stripos($guid, '?guid=') + 6);
+		$guid = substr($guid, stripos($guid, '?guid=') + 6, -1);
 		$res[$name] = $guid;
 	}
 	return $res;
@@ -105,7 +108,7 @@ function buildConditions($pointFilter) {
 		if (strlen($types) > 1) {
 			$types .= ' or ';
 		}
-		$types .= 'contains(td[@class="Merge"]/img[@class="SearchResultsWptType"]/@src, "'.$type.'")';
+		$types .= 'contains(td[@class="Merge"]//img[@class="SearchResultsWptType"]/@src, "'.$type.'")';
 	}
 	$types .= ']';
 	$res .= $types;
