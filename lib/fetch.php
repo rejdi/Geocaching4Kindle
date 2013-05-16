@@ -39,17 +39,18 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 	$max = $pointFilter['limitCount'] > 0 ? min($pointFilter['limitCount'], 100) : 10;
 	$conditions = buildConditions($pointFilter);
 	$dist = empty($pointFilter['limitDist']) ? '' : ('&dist=' . (int)($pointFilter['limitDist'] / 1.6));
-	$i = 0;
-	while (count($result) < $max && $i < 10) {
+	$i = 1;
+	$file = null;
+	while (count($result) < $max && $i <= 10) {
 		$url = 'http://www.geocaching.com/seek/nearest.aspx?lat=' . $point['locLat'] . '&lng='. $point['locLong'] . $dist;
+		$res = file_put_contents($postfile, createSearchPostData($file, $i));
 		$file = 'result/' . $session_id . '/search'.$i.'.html';
 		unlink($file);
-		$res = file_put_contents($postfile, '__EVENTTARGET=ctl00%24ContentBody%24pgrTop%24lbGoToPage_' . $i);
-		if (!$res) {
+		if ($res === false) {
 			break;
 		}
-		logg($session_id, 'Have '.count($result).' caches. Downloading search page ' . ($i+1) . '...');
-		$command = 'wget -a result/' . $session_id . '/wget.log -O "'.$file.'" --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 '.$url;
+		logg($session_id, 'Have '.count($result).' caches. Downloading search page ' . $i . '...');
+		$command = 'wget -a result/' . $session_id . '/wget.log -O "'.$file.'" --load-cookies '.$cookiefile.' --post-file="'.$postfile.'" --random-wait --timeout=5 --tries=3 '.$url;
 		if (exec(escapeshellcmd($command)) != 0) {
 			break;
 		}
@@ -65,6 +66,23 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 		$i++;
 	}
 	return $result;
+}
+
+function createSearchPostData($file, $i) {
+	if ($file == null) {
+		return '';
+	}
+	
+	$res = '__EVENTTARGET=ctl00%24ContentBody%24pgrTop%24lbGoToPage_' . $i . '&__VIEWSTATEFIELDCOUNT=2';
+	$html = new DOMDocument();
+	$html->loadHTMLFile($file);
+	$sxml = simplexml_import_dom($html);
+	$viewstate = $sxml->xpath('//input[@id="__VIEWSTATE"]/@value');
+	$viewstate1 = $sxml->xpath('//input[@id="__VIEWSTATE1"]/@value');
+	$res .= '&__VIEWSTATE=' . urlencode(substr($viewstate[0]->asXML(), 8, -1));
+	$res .= '&__VIEWSTATE1=' . urlencode(substr($viewstate1[0]->asXML(), 8, -1));
+	
+	return $res;
 }
 
 function dumpCaches($file, $conditions) {
