@@ -34,8 +34,22 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 	//http://www.geocaching.com/seek/nearest.aspx?lat=48.149245&lng=17.107005&dist=62.5
 	//TODO: search by city is not supported
 
-	$postfile = 'result/'.$session_id.'/search-post.txt';
+	if (!empty($point['city'])) {
+		logg($session_id, 'Getting '.$point['city'].' location ...');
+		$json = file_get_contents('http://www.geocaching.com/api/geocode?q='.urlencode($point['city']));
+		$data = json_decode($json);
+		$point['locLat'] = $data->data->lat;
+		$point['locLong'] = $data->data->lng;
+		logg($session_id, $point['city'] . ' at lat: ' . $point['locLat'] . ', lng: ' . $point['locLong']);
+	}
+
 	$result = array();
+	
+	if (empty($point['locLat']) || empty($point['locLong'])) {
+		return $result;
+	}
+
+	$postfile = 'result/'.$session_id.'/search-post.txt';
 	$max = $pointFilter['limitCount'] > 0 ? min($pointFilter['limitCount'], 100) : 10;
 	$conditions = buildConditions($pointFilter);
 	$dist = empty($pointFilter['limitDist']) ? '' : ('&dist=' . (int)($pointFilter['limitDist'] / 1.6));
