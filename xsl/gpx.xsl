@@ -36,7 +36,7 @@
 <sym>Geocache</sym>
 <type>Geocache|<xsl:value-of select="normalize-space(type/text)"/></type>
 
-<groundspeak:cache available="True" archived="False">
+<groundspeak:cache id="{code}" xmlns:groundspeak="http://www.groundspeak.com/cache/1/0" available="True" archived="False">
 	<groundspeak:name>
 		<xsl:value-of select="normalize-space(name)"/>
 	</groundspeak:name>
