@@ -7,14 +7,58 @@
 </head>
 <body>
 <?php
+
+function normalize_size($size) {
+	if ($size > 1024) {
+		$size = $size / 1024;
+	} else {
+		$size .= 'B';
+		return $size;
+	}
+	
+	if ($size > 1024) {
+		$size = $size / 1024;
+	} else {
+		$size = round($size, 2) . 'K';
+		return $size;
+	}
+	
+	$size = round($size, 2) . 'M';
+	return $size;
+}
+
+
 $session_id = $_GET['id'];
 if (!is_numeric($session_id)) {
 	echo 'ERROR: Invalid session';
 } else {
+	$mobi = @filesize('result/'.$session_id.'/result.mobi');
+	$loc = @filesize('result/'.$session_id.'/result.loc');
+	$gpx = @filesize('result/'.$session_id.'/result.gpx');
+	
+	
+	if ($mobi === false) {
+		$mobi = 'in progress...';
+	} else {
+		$mobi = normalize_size($mobi);
+	}
+	
+	if ($loc === false) {
+		$loc = 'in progress...';
+	} else {
+		$loc = normalize_size($loc);
+	}
+	
+	if ($gpx === false) {
+		$gpx = 'in progress...';
+	} else {
+		$gpx = normalize_size($gpx);
+	}
+	
 	echo '
-	<a href="result/'.$session_id.'/result.mobi">.mobi</a>
-	<a href="result/'.$session_id.'/result.loc">.loc</a>
-	<a href="result/'.$session_id.'/result.gpx">.gpx</a>
+	<a href="result/'.$session_id.'/result.mobi">.mobi ('.$mobi.')</a>
+	<a href="result/'.$session_id.'/result.loc">.loc ('.$loc.')</a>
+	<a href="result/'.$session_id.'/result.gpx">.gpx ('.$gpx.')</a>
 	';
 	
 	echo '<pre>';
