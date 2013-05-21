@@ -18,7 +18,7 @@
 <xsl:param name="logs"/>
 
 <xsl:template match="/" mode="includes">
-	<xsl:if test="$withImages">
+	<xsl:if test="not($withImages)">
 		<link rel="stylesheet" href="../../xsl/images.css" type="text/css"/>
 	</xsl:if>
 </xsl:template>
@@ -126,13 +126,13 @@
 
 <xsl:template match="short-description">
 	<xsl:if test="$shortDesc">
-		<xsl:copy-of select="*"/>
+		<xsl:apply-templates select="@*|node()" mode="filterImages"/>
 	</xsl:if>
 </xsl:template>
 
 <xsl:template match="long-description">
 	<xsl:if test="$longDesc">
-		<xsl:copy-of select="*"/>
+		<xsl:apply-templates select="@*|node()" mode="filterImages"/>
 	</xsl:if>
 </xsl:template>
 
@@ -146,8 +146,29 @@
 		<span class="type">[<xsl:value-of select="type"/>]</span><span class="time">[<xsl:value-of select="time"/>]</span><span class="user">[<xsl:value-of select="user"/>]</span>
 		</h3>
 		<dl class="comment log_{position() mod 2}">
-			<xsl:copy-of select="comment/*"/>
+			<xsl:apply-templates select="comment/@*|comment/node()" mode="filterImages"/>
 		</dl>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template match="node()|@*" mode="filterImages">
+	<xsl:choose>
+		<xsl:when test="name() = 'style' and contains(., 'url(')">
+			<xsl:attribute name="style">
+				<xsl:value-of select="substring-before(., 'url(')"/>url()<xsl:value-of select="substring-after(')', substring-after(., 'url('))"/>
+			</xsl:attribute>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:copy>
+				<xsl:apply-templates select="@*|node()" mode="filterImages"/>
+			</xsl:copy>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template match="img" mode="filterImages">
+	<xsl:if test="$withImages">
+		<xsl:copy-of select="."/>
 	</xsl:if>
 </xsl:template>
 

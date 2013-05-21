@@ -1,4 +1,4 @@
-	vlastny geokindle book
+vlastny geokindle book
 
 co by to mohlo vediet?
 

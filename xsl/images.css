@@ -1,3 +1,7 @@
 img {
-	display: inline !important;
+	display: none;
+}
+
+* {
+	background-image: none !important;
 }
