@@ -1,1 +1,4 @@
 deny from all
+<Files *.css>
+Allow From All 
+</Files>

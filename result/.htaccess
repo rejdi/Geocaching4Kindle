@@ -1,5 +1,8 @@
 Options All -Indexes
-Deny From All 
-<Files result.*>
 Allow From All 
+<Files *.log>
+Deny From All 
+</Files>
+<Files *.txt>
+Deny From All 
 </Files>

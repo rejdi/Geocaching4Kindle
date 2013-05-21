@@ -59,6 +59,7 @@ if (!is_numeric($session_id)) {
 	<a href="result/'.$session_id.'/result.mobi">.mobi ('.$mobi.')</a>
 	<a href="result/'.$session_id.'/result.loc">.loc ('.$loc.')</a>
 	<a href="result/'.$session_id.'/result.gpx">.gpx ('.$gpx.')</a>
+	<a href="result/'.$session_id.'/kindle.html">.html</a>
 	';
 	
 	echo '<pre>';
