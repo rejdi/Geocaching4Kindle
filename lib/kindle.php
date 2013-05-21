@@ -15,7 +15,7 @@ function createKindle($session_id, $intermediate, $process, $settings) {
 	$kindleOut = new XSLTProcessor();
 	$kindleOut->importStylesheet($xsl);
 	$kindleOut->setParameter('', $settings);
-	$htmlfile = 'result/'.$session_id.'/kindle.html';
+	$htmlfile = 'result/'.$session_id.'/result.html';
 	$mobifile = 'result.mobi';
 	
 	if ($settings['withImages'] && $settings['map']) {

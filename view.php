@@ -33,9 +33,9 @@ if (!is_numeric($session_id)) {
 	echo 'ERROR: Invalid session';
 } else {
 	$mobi = @filesize('result/'.$session_id.'/result.mobi');
-	$loc = @filesize('result/'.$session_id.'/result.loc');
+	$gpi = @filesize('result/'.$session_id.'/result.gpi');
 	$gpx = @filesize('result/'.$session_id.'/result.gpx');
-	
+	$html = @filesize('result/'.$session_id.'/result.html');
 	
 	if ($mobi === false) {
 		$mobi = 'in progress...';
@@ -43,10 +43,10 @@ if (!is_numeric($session_id)) {
 		$mobi = normalize_size($mobi);
 	}
 	
-	if ($loc === false) {
-		$loc = 'in progress...';
+	if ($gpi === false) {
+		$gpi = 'in progress...';
 	} else {
-		$loc = normalize_size($loc);
+		$gpi = normalize_size($gpi);
 	}
 	
 	if ($gpx === false) {
@@ -55,11 +55,17 @@ if (!is_numeric($session_id)) {
 		$gpx = normalize_size($gpx);
 	}
 	
+	if ($html === false) {
+		$html = 'in progress...';
+	} else {
+		$html = 'done';
+	}
+	
 	echo '
 	<a href="result/'.$session_id.'/result.mobi">.mobi ('.$mobi.')</a>
-	<a href="result/'.$session_id.'/result.loc">.loc ('.$loc.')</a>
+	<a href="result/'.$session_id.'/result.gpi">.gpi ('.$gpi.')</a>
 	<a href="result/'.$session_id.'/result.gpx">.gpx ('.$gpx.')</a>
-	<a href="result/'.$session_id.'/kindle.html">.html</a>
+	<a href="result/'.$session_id.'/result.html">.html ('.$html.')</a>
 	';
 	
 	echo '<pre>';

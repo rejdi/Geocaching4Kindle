@@ -34,13 +34,22 @@ kindlegen - generovanie vystupu pre kindle z html
 xslt sablony na preparsovanie vstupu z webu, vyhodenie somarin, generovanie poi, generovanie gpx
 wget na masove stiahnutie html + obrazkov
 
+requirements
+* webserver (.htaccess recommended) + php
+* php with libxslt support
+* wget
+* kindlegen
+* gpsbabel
+* some disk space
+* unix rm
 
-GPX
+
 treba doplnit
 
 - cas vytvorenia kese (ten este skonvertovat)
-- logs
-  - id - dlhe cislo	(toto je len v non-print verzii)
-  - finder id - uuid (toto je len v non-print verzii)
 - waypoints
   - pozicia XX.YYYY
+- selectovanie na typ mapy (mapnik, freemap, ...)
+- licenciu
+- readme
+- navod na instalaciu + requirements

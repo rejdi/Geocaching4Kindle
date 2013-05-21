@@ -5,7 +5,7 @@ require_once 'lib/fetch.php';
 require_once 'lib/intermediate.php';
 require_once 'lib/kindle.php';
 require_once 'lib/gpx.php';
-require_once 'lib/loc.php';
+require_once 'lib/gpi.php';
 
 if ($argc > 0) {
 	$settings = unserialize($argv[1]);
@@ -113,6 +113,7 @@ if ($settings['type'] == 'list') {
 	}
 
 }
+unlink($cookiefile);
 
 if (empty($process)) {
 	logg($session_id, 'Empty list, nothing to do.');
@@ -129,12 +130,19 @@ if (!$res) {
 	logg($session_id, 'Failed to create gpx output!');
 }
 
-logg($session_id, 'Creating kindle output...');
+
+logg($session_id, 'Creating garmin gpi output...');
+$res = createGPI($session_id, $settings['outputGPI']);
+if (!$res) {
+	logg($session_id, 'Failed to create gpi output!');
+}
+
+logg($session_id, 'Creating html and kindle output...');
 $res = createKindle($session_id, $intermediate, $process, $settings['outputKindle']);
 if (!$res) {
 	logg($session_id, 'Failed to create kindle output!');
 }
-//createLOC($session_id, $process, $settings['outputLOC']);
+
 logg($session_id, 'Done.');
 
 ?>

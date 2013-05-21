@@ -79,6 +79,7 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 		}
 		$i++;
 	}
+	unlink($postfile);
 	return $result;
 }
 

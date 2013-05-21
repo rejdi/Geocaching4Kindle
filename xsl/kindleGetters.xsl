@@ -155,7 +155,7 @@
 	<xsl:choose>
 		<xsl:when test="not($withImages) and name() = 'style' and contains(., 'url(')">
 			<xsl:attribute name="style">
-				<xsl:value-of select="substring-before(., 'url(')"/>url()<xsl:value-of select="substring-after(')', substring-after(., 'url('))"/>
+				<xsl:value-of select="substring-before(., 'url(')"/><xsl:value-of select="substring-after(')', substring-after(., 'url('))"/>
 			</xsl:attribute>
 		</xsl:when>
 		<xsl:otherwise>

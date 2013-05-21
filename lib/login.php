@@ -16,7 +16,9 @@ function login($username, $password, $session_id) {
 	
 	$cookies = file_get_contents($cookiefile);
 	$userid = stristr($cookies, 'userid');
+	unlink($postfile);
 	if (empty($userid)) {
+		unlink($cookiefile);
 		return false;
 	}
 	
