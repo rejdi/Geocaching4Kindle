@@ -1,0 +1,42 @@
+USAGE:
+~~~~~~
+
+Navigate to site with geo-kindle service.
+Fill username and password for geocaching.com.
+Select one of cache retrieval type:
+* cache list
+* around location
+
+Cache list:
+~~~~~~~~~~~
+enter new line, comma or space separated list of cache codes (ex: GCZT9M, GC1YRCH).
+
+
+Around location:
+~~~~~~~~~~~~~~~~
+Enter city name or position in hddd.dddddd° format.
+Instead of N, E, W, S use signed numbers. E and N are positive, W and S are negative ones.
+Next you have to choose which cache types are you interested in.
+Follows minimum and maximum difficulty and terrain.
+When field is empty, it won't be using during cache filtering.
+*1
+
+select informations what you want to have in your kindle book for each cache.
+TOC stands for table of content.
+Currently, max 10 logs are supported for each cache.
+
+Click on create.
+
+
+You will be redirected to page where is process log. You have to refresh page to get log updates.
+Once the files are created, information about file size will appear in links and result can be downloaded.
+
+
+
+
+NOTES:
+~~~~~~
+
+*1 -	Max 10 search pages will be downloaded.
+		When no maximum caches is specified, maximum will be 10.
+		Even if maximum is greater than 100, no more than 100 caches will be downloaded.

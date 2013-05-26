@@ -50,6 +50,3 @@ treba doplnit
 - waypoints
   - pozicia XX.YYYY
 - selectovanie na typ mapy (mapnik, freemap, ...)
-- licenciu
-- readme
-- navod na instalaciu + requirements

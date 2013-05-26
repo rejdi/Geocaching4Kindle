@@ -1,0 +1,18 @@
+REQUIREMENTS:
+~~~~~~~~~~~~~
+To run this project on you own, you need:
+* http server with php support
+* php (tested on 5.3.3, but older should work without problems, however 5+ is recommended)
+* enabled xsl extension for php
+* wget
+* kindlegen if you want output for kindle (google kindlegen or try http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211)
+* for gpi output, you need gpsbabel
+
+
+INSTALLATION:
+~~~~~~~~~~~~~
+Place to your web published directory entire project.
+Make sure, that following directories exists and are writable for webserver account (respectively php):
+* cache
+* result
+* staticmaplite/cache

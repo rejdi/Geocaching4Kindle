@@ -59,7 +59,7 @@ $settings = array of
 	$map
 */
 $session_id = $settings['session'];
-system('rm -rf result/'.$session_id);
+deleteDirectory('result/'.$session_id);
 mkdir('result/'.$session_id);
 // logg($session_id, print_r($settings, true));
 // logg($session_id, $argv[1]);
@@ -145,4 +145,17 @@ if (!$res) {
 
 logg($session_id, 'Done.');
 
+
+function deleteDirectory($dir) {
+    if (!file_exists($dir)) return true;
+    if (!is_dir($dir) || is_link($dir)) return unlink($dir);
+	foreach (scandir($dir) as $item) {
+		if ($item == '.' || $item == '..') continue;
+		if (!deleteDirectory($dir . "/" . $item)) {
+			chmod($dir . "/" . $item, 0777);
+			if (!deleteDirectory($dir . "/" . $item)) return false;
+		};
+	}
+	return rmdir($dir);
+} 
 ?>
