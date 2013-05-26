@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>Geocaching generator</title>
+<title>Available maps</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="style.css" type="text/css" media="all" />
 </head>
@@ -63,6 +63,14 @@ Terrain min: <input type="text" name="terrainMin"/> max: <input type="text" name
 <p>
 <input type="checkbox" name="withImages" checked="checked"/>Include images<br/>
 <input style="margin-left: 10px" type="checkbox" name="map" checked="checked"/>Include map<br/>
+Map type: 	<select name="maptype">
+<option value="mapnikbw">Mapnik b/w (OpenStreet Maps)</option>
+<option value="mapnik">Mapnik (OpenStreet Maps)</option>
+<option value="mapquest">Mapquest (Mapquest)</option>
+<option value="cycle">Cycle (OpenCycleMap)</option>
+<option value="hike">Hiking (freemap.sk - slovakia)</option>
+<select>
+<a href="maps.html">?</a><br/>
 <input type="checkbox" name="tocName" checked="checked"/>Generate TOC, sorted by name<br/>
 <input type="checkbox" name="tocDifficulty"/>Generate TOC, sorted by difficulty<br/>
 <input type="checkbox" name="tocTerrain"/>Generate TOC, sorted by terrain<br/>

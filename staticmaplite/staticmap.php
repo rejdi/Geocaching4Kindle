@@ -31,9 +31,10 @@ ini_set('display_errors','off');
 Class staticMapLite {
 
 	protected $tileSize = 256;
-	protected $tileSrcUrl = array(	'mapnik' => 'http://tile.openstreetmap.org/{Z}/{X}/{Y}.png',
-									'osmarenderer' => 'http://c.tah.openstreetmap.org/Tiles/tile/{Z}/{X}/{Y}.png',
-									'cycle' => 'http://c.andy.sandbox.cloudmade.com/tiles/cycle/{Z}/{X}/{Y}.png',
+	protected $tileSrcUrl = array(	'mapnikbw' => 'http://a.www.toolserver.org/tiles/bw-mapnik/{Z}/{X}/{Y}.png',
+									'mapnik' => 'http://tile.openstreetmap.org/{Z}/{X}/{Y}.png',
+									'mapquest' => 'http://otile1.mqcdn.com/tiles/1.0.0/map/{Z}/{X}/{Y}.png',
+									'cycle' => 'http://a.tile.opencyclemap.org/cycle/{Z}/{X}/{Y}.png',
 									'hike' => 'http://a.freemap.sk/T/{Z}/{X}/{Y}.png'
 	);
 	

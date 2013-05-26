@@ -45,6 +45,7 @@ $settings = array(
 		return array(
 			'withImages'=> $_POST['withImages'] == 'on',
 			'map'=> $_POST['map'] == 'on',
+			'maptype'=> $_POST['maptype'],
 			'tocName'=> $_POST['tocName'] == 'on',
 			'tocDifficulty'=> $_POST['tocDifficulty'] == 'on',
 			'tocTerrain'=> $_POST['tocTerrain'] == 'on',
