@@ -15,6 +15,7 @@ function createKindle($session_id, $intermediate, $process, $settings) {
 	$kindleOut = new XSLTProcessor();
 	$kindleOut->importStylesheet($xsl);
 	$kindleOut->setParameter('', $settings);
+	$kindleOut->setParameter('', 'currentDate', date('r'));
 	$htmlfile = 'result/'.$session_id.'/result.html';
 	$mobifile = 'result.mobi';
 	

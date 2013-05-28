@@ -3,13 +3,16 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:import href="kindleGetters.xsl"/>
 <xsl:output omit-xml-declaration="no" method="xml" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="utf-8" indent="yes"/>
+<xsl:param name="currentDate"/>
 
 <xsl:template match="/caches">
 
 <html xml:lang="en" lang="en">
 <head>
-<title>Geocaching for Kindle</title>
+<title>Geocaching4Kindle (<xsl:value-of select="$currentDate"/>, <xsl:value-of select="count(cache)"/> caches)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="Martin Rejda"/>
+<meta name="generator" content="Geocaching4Kindle"/>
 <link rel="stylesheet" href="../../xsl/style.css" type="text/css" media="all" />
 <xsl:apply-templates select="/" mode="includes"/>
 </head>

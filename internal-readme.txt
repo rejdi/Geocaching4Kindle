@@ -35,7 +35,5 @@ wget na masove stiahnutie html + obrazkov
 
 treba doplnit
 
-- cas vytvorenia kese (ten este skonvertovat)
 - waypoints
   - pozicia XX.YYYY
-- selectovanie na typ mapy (mapnik, freemap, ...)
