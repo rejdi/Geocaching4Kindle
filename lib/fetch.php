@@ -9,7 +9,7 @@ function fetchPrint($session_id, $cookiefile, $gccode) {
 	$file = 'cache/' . $gccode . '/' . $gccode . '.html';
 	unlink($file);
 	mkdir('cache/' . $gccode);
-	$command = 'wget -a result/'.$session_id.'/wget.log -O "'.$file.'" -E -e robots=off -H -k -P cache/ --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 http://www.geocaching.com/seek/cache_details.aspx?wp=' . $gccode;
+	$command = 'wget -a result/'.$session_id.'/wget.log -O "'.$file.'" -E -e robots=off -H -k -P cache/ --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 http://www.geocaching.com/geocache/' . $gccode;
 	
 	//logg($session_id, $command);
 	
@@ -111,9 +111,9 @@ function dumpCaches($file, $conditions) {
 		$name = $name[0]->asXML();
 		$name = explode('|', $name);
 		$name = trim(str_replace('&#13;', '', $name[1]));
-		$guid = $cache->xpath('td[@class="Merge"]/a[@class="lnk"]/@href');
-		$guid = $guid[0]->asXML();
-		$guid = substr($guid, stripos($guid, '?guid=') + 6, -1);
+		$link = $cache->xpath('td[@class="Merge"]/a[@class="lnk"]/@href');
+		$link = $guid[0];
+		//$guid = substr($guid, stripos($guid, '?guid=') + 6, -1);
 		$res[$name] = $guid;
 	}
 	return $res;

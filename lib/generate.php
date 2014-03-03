@@ -98,13 +98,14 @@ if ($settings['type'] == 'list') {
 		exit(0);
 	}
 	
-	$guids = fetchList($session_id, $cookiefile, $point, $pointFilter);
+	$links = fetchList($session_id, $cookiefile, $point, $pointFilter);
 
 	$i = 1;
-	foreach ($guids as $key=>$guid) {
-		logg($session_id, 'Downloading... (' . $i . '/' . count($guids) . ') ' . $key);
+	foreach ($links as $key=>$link) {
+		logg($session_id, 'Downloading... (' . $i . '/' . count($links) . ') ' . $key);
 		$i++;
-		$result = fetchPrintByGuid($session_id, $cookiefile, $key, $guid);
+		//$result = fetchPrintByLink($session_id, $cookiefile, $key, $link);
+		$result = fetchPrint($session_id, $cookiefile, $key);
 		if (empty($result)) {
 			logg($session_id, 'Failed to download ' . $key . ', skipping ...');
 			continue;

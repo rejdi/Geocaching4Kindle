@@ -25,16 +25,16 @@
 <hidden><xsl:value-of select="substring-after(normalize-space(//span[@class='minorCacheDetails' and substring(normalize-space(text()),1,8)='Hidden :']),'Hidden : ')"/></hidden>
 
 <difficulty>
-	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third AlignCenter']/p[@class='Meta']/img/@alt),' out of')"/>
+	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third']/p[@class='Meta DiffTerr']/img/@alt),' out of')"/>
 </difficulty>
 
 <terrain>
-	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third AlignRight']/p[@class='Meta']/img/@alt),' out of')"/>
+	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third']/p[@class='Meta DiffTerr']/img/@alt),' out of')"/>
 </terrain>
 
 <size>
-	<img><xsl:value-of select="//div[@class='Third']/p[@class='Meta']/img[substring-before(@alt,':')='Size']/@src"/></img>
-	<text><xsl:value-of select="substring-after(substring-before(//div[@class='Third']/p[@class='Meta']/img[substring-before(@alt,':')='Size']/../small,')'),'(')"/></text>
+	<img><xsl:value-of select="//div[@class='Third AlignCenter']/p[@class='Meta']/img[substring-before(@alt,':')='Size']/@src"/></img>
+	<text><xsl:value-of select="substring-after(substring-before(//div[@class='Third AlignCenter']/p[@class='Meta']/img[substring-before(@alt,':')='Size']/../small,')'),'(')"/></text>
 </size>
 
 <hintEncrypted><xsl:value-of select="//div[@id='uxDecryptedHint']"/></hintEncrypted>
