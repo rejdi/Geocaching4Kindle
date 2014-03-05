@@ -28,6 +28,16 @@ function DMStoDec2($deg, $minsec) {
 	return $deg+($minsec)/60;
 }
 
+function ascii_to_dec($str) {
+	//TODO: implement proper function to convert GC code to number or figure out, how to get cacheID
+	$result = "";
+	for ($i = 0, $j = strlen($str); $i < $j; $i++) {
+		$result .= ord($str{$i});
+	}
+	$result = floor(fmod($result, 4294967296));
+	return $result;
+}
+
 function DMStoDec($value) {
 //	'N 48° 10.161 E 017° 03.042'
 	$pos = stripos($value, 'E');
@@ -44,13 +54,12 @@ function DMStoDec($value) {
 	$b = 1;
 
 	if ($lat[0] == 'S') $a = -1;
-	if ($lon[0] == 'S') $b = -1;
+	if ($lon[0] == 'W') $b = -1;
 
 	$lat = DMStoDec2($a*($lat[2] . $lat[3]), $a*($lat[7].$lat[8].$lat[10].$lat[11].$lat[12])/1000);
 	$lon = DMStoDec2($b*($lon[2] . $lon[3] . $lon[4]), $b*($lon[8].$lon[9].$lon[11].$lon[12].$lon[13])/1000);
 	
 	return '<lat>'.$lat.'</lat><lon>'.$lon.'</lon>';
-
 }
 
 ?>

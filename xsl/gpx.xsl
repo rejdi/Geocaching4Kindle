@@ -36,7 +36,10 @@
 <sym>Geocache</sym>
 <type>Geocache|<xsl:value-of select="normalize-space(type/text)"/></type>
 
-<groundspeak:cache id="{code}" xmlns:groundspeak="http://www.groundspeak.com/cache/1/0" available="True" archived="False">
+<groundspeak:cache xmlns:groundspeak="http://www.groundspeak.com/cache/1/0" available="True" archived="False">
+	<xsl:attribute name="id">
+		<xsl:value-of select="php:function('ascii_to_dec', normalize-space(code))"/>
+	</xsl:attribute>
 	<groundspeak:name>
 		<xsl:value-of select="normalize-space(name)"/>
 	</groundspeak:name>

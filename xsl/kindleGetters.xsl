@@ -167,7 +167,7 @@
 </xsl:template>
 
 <xsl:template match="img" mode="filterImages">
-	<xsl:if test="$withImages">
+	<xsl:if test="$withImages and @src">
 		<xsl:copy-of select="."/>
 	</xsl:if>
 </xsl:template>
