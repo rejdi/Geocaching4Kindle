@@ -25,11 +25,11 @@
 <hidden><xsl:value-of select="substring-after(normalize-space(//span[@class='minorCacheDetails' and substring(normalize-space(text()),1,8)='Hidden :']),'Hidden : ')"/></hidden>
 
 <difficulty>
-	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third']/p[@class='Meta DiffTerr']/img/@alt),' out of')"/>
+	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third']/p[@class='Meta DiffTerr']/img[1]/@alt),' out of')"/>
 </difficulty>
 
 <terrain>
-	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third']/p[@class='Meta DiffTerr']/img/@alt),' out of')"/>
+	<xsl:value-of select="substring-before(normalize-space(//div[@class='Third']/p[@class='Meta DiffTerr']/img[2]/@alt),' out of')"/>
 </terrain>
 
 <size>
