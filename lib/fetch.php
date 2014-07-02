@@ -88,14 +88,16 @@ function createSearchPostData($file, $i) {
 		return '';
 	}
 	
-	$res = '__EVENTTARGET=ctl00%24ContentBody%24pgrTop%24lbGoToPage_' . $i . '&__VIEWSTATEFIELDCOUNT=2';
+	$res = '__EVENTTARGET=ctl00%24ContentBody%24pgrTop%24lbGoToPage_' . $i . '&__VIEWSTATEFIELDCOUNT=3';
 	$html = new DOMDocument();
 	$html->loadHTMLFile($file);
 	$sxml = simplexml_import_dom($html);
 	$viewstate = $sxml->xpath('//input[@id="__VIEWSTATE"]/@value');
 	$viewstate1 = $sxml->xpath('//input[@id="__VIEWSTATE1"]/@value');
+	$viewstate2 = $sxml->xpath('//input[@id="__VIEWSTATE2"]/@value');
 	$res .= '&__VIEWSTATE=' . urlencode(substr($viewstate[0]->asXML(), 8, -1));
 	$res .= '&__VIEWSTATE1=' . urlencode(substr($viewstate1[0]->asXML(), 8, -1));
+	$res .= '&__VIEWSTATE2=' . urlencode(substr($viewstate2[0]->asXML(), 8, -1));
 	
 	return $res;
 }
