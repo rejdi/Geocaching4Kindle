@@ -34,7 +34,7 @@ function ascii_to_dec($str) {
 	for ($i = 0, $j = strlen($str); $i < $j; $i++) {
 		$result .= ord($str{$i});
 	}
-	$result = floor(fmod($result, 4294967296));
+	$result = floor(fmod($result, 2147483648));
 	return $result;
 }
 
