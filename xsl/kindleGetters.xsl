@@ -107,14 +107,28 @@
 <xsl:template match="hintEncrypted">
 	<xsl:if test="$hints and not($solveHint)">
 		<h3>Hint</h3>
-		<xsl:value-of select="."/>
+		<xsl:choose>
+		<xsl:when test="normalize-space(.)">
+			<xsl:value-of select="."/>
+		</xsl:when>
+		<xsl:otherwise>
+			No hint available.
+		</xsl:otherwise>
+		</xsl:choose>
 	</xsl:if>
 </xsl:template>
 
 <xsl:template match="hintDecrypted">
 	<xsl:if test="$hints and $solveHint">
 		<h3>Hint</h3>
-		<xsl:value-of select="."/>
+		<xsl:choose>
+		<xsl:when test="normalize-space(.)">
+			<xsl:value-of select="."/>
+		</xsl:when>
+		<xsl:otherwise>
+			No hint available.
+		</xsl:otherwise>
+		</xsl:choose>
 	</xsl:if>
 </xsl:template>
 
