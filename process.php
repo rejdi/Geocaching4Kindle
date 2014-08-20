@@ -36,7 +36,7 @@ $settings = array(
 			'difficultyMax' => $_POST['difficultyMax'],
 			'terrainMin' => $_POST['terrainMin'],
 			'terrainMax' => $_POST['terrainMax'],
-			'notFound' => $_POST['shortDesc'] == 'on',
+			'notFound' => $_POST['notFound'] == 'on',
 			'onlyActive' => $_POST['onlyActive'] == 'on',
 			'skipPremium' => $_POST['skipPremium'] == 'on',
 			);
