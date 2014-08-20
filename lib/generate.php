@@ -42,6 +42,13 @@ $settings = array of
 	$notFound = boolean
 	$onlyActive = boolean
 	$skipPremium = boolean
+	
+$outputGPX = array of
+	$shortDesc
+	$longDesc
+	$hints
+	$logs = integer <0,10>
+	$additionalWaypoints
 
  $outputKindle = array of
 	$withImages

@@ -9,6 +9,7 @@ $settings = array(
 	'codes' => createCodes($_POST['cacheList']),
 	'point' => createPoint(),
 	'pointFilter' => createPointFilter(),
+	'outputGPX' => createOutputGPX(),
 	'outputKindle' => createOutputKindle(),
 	);
 
@@ -38,6 +39,16 @@ $settings = array(
 			'notFound' => $_POST['shortDesc'] == 'on',
 			'onlyActive' => $_POST['onlyActive'] == 'on',
 			'skipPremium' => $_POST['skipPremium'] == 'on',
+			);
+	}
+	
+	function createOutputGPX() {
+		return array(
+			'shortDesc'=> $_POST['GPX_shortDesc'] == 'on',
+			'longDesc'=> $_POST['GPX_longDesc'] == 'on',
+			'additionalWaypoints'=> $_POST['GPX_additionalWaypoints'] == 'on',
+			'hints'=> $_POST['GPX_hints'] == 'on',
+			'logs' => $_POST['GPX_logs'],
 			);
 	}
 

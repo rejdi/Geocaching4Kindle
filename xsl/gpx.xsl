@@ -7,6 +7,13 @@
 	xmlns:php="http://php.net/xsl"
 	extension-element-prefixes="func fn">
 <xsl:output method="xml" version="1.0" encoding="utf-8" indent="yes"/>
+
+<xsl:param name="shortDesc"/>
+<xsl:param name="longDesc"/>
+<xsl:param name="additionalWaypoints"/>
+<xsl:param name="hints"/>
+<xsl:param name="logs"/>
+
 <xsl:template match='/'>
 <!-- <gpx creator="Rejdi" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:groundspeak="http://www.groundspeak.com/cache/1/1"> -->
 <gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.0" creator="Geocaching generator" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.groundspeak.com/cache/1/0 http://www.groundspeak.com/cache/1/0/cache.xsd" xmlns="http://www.topografix.com/GPX/1/0" xmlns:groundspeak="http://www.groundspeak.com/cache/1/0">
@@ -58,16 +65,19 @@
 	<groundspeak:terrain>
 		<xsl:value-of select="normalize-space(terrain)"/>
 	</groundspeak:terrain>
+	<xsl:if test="$shortDesc">
 	<groundspeak:short_description html="True">
 		<xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
 			<xsl:copy-of select="short-description/*"/>
 		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	</groundspeak:short_description>
+	</xsl:if>
+	<xsl:if test="$longDesc">
 	<groundspeak:long_description html="True">
 		<xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
 			<xsl:copy-of select="long-description/*"/>
 			
-			<xsl:if test="waypoint">
+			<xsl:if test="waypoint and $additionalWaypoints">
 			<p>Additional waypoints:
 			<xsl:for-each select="waypoint">
 				<br/>
@@ -80,12 +90,16 @@
 			
 		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	</groundspeak:long_description>
+	</xsl:if>
+	
+	<xsl:if test="$hints">
 	<groundspeak:encoded_hints>
 		<xsl:value-of select="normalize-space(hintDecrypted)"/>
 	</groundspeak:encoded_hints>
+	</xsl:if>
 	
 	<groundspeak:logs>
-		<xsl:for-each select="log">
+		<xsl:for-each select="log[position() &lt;= $logs]">
 		<groundspeak:log>
 			<groundspeak:date>
 				<xsl:value-of select="php:function('normalizeTime', normalize-space(time))"/>
@@ -107,7 +121,7 @@
 
 </wpt>
 
-<xsl:if test="count(waypoint/lat) &gt; 0">
+<xsl:if test="$additionalWaypoints and count(waypoint/lat) &gt; 0">
 <rte>
 	<name><xsl:value-of select="normalize-space(name)"/></name>
 	<xsl:for-each select="waypoint[lat]">
