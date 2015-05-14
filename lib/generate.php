@@ -68,7 +68,7 @@ $outputGPX = array of
 $session_id = $settings['session'];
 deleteDirectory('result/'.$session_id);
 mkdir('result/'.$session_id);
-// logg($session_id, print_r($settings, true));
+// logg($session_id, json_encode($settings));
 // logg($session_id, $argv[1]);
 logg($session_id, 'Logging in...');
 $cookiefile = login($settings['user'], $settings['pass'], $session_id);

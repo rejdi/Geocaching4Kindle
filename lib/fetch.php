@@ -32,7 +32,6 @@ function fetchPrint($session_id, $cookiefile, $gccode) {
 //return array, where keys are cache codes, values are paths to downloaded files
 function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 	//http://www.geocaching.com/seek/nearest.aspx?lat=48.149245&lng=17.107005&dist=62.5
-	//TODO: search by city is not supported
 
 	if (!empty($point['city'])) {
 		logg($session_id, 'Getting '.$point['city'].' location ...');
@@ -49,22 +48,21 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 		return $result;
 	}
 
-	$postfile = 'result/'.$session_id.'/search-post.txt';
 	$max = $pointFilter['limitCount'] > 0 ? min($pointFilter['limitCount'], 100) : 10;
 	$conditions = buildConditions($pointFilter);
 	$dist = empty($pointFilter['limitDist']) ? '' : ('&dist=' . (int)($pointFilter['limitDist'] / 1.6));
-	$i = 1;
+	$i = 0;
 	$file = null;
-	while (count($result) < $max && $i <= 10) {
-		$url = 'http://www.geocaching.com/seek/nearest.aspx?lat=' . $point['locLat'] . '&lng='. $point['locLong'] . $dist;
-		$res = file_put_contents($postfile, createSearchPostData($file, $i));
+	while (count($result) < $max && $i < 10) {
+		//$url = 'http://www.geocaching.com/seek/nearest.aspx?lat=' . $point['locLat'] . '&lng='. $point['locLong'] . $dist;
+		$url = 'https://www.geocaching.com/play/search/more-results?startIndex='. $i*50 . '&inputOrigin='.$point['locLat'].'%2C'.$point['locLong'].'&sortOrigin=&fbu=false&filteredByOtherUsersFinds=false&originTreatment=0';
 		$file = 'result/' . $session_id . '/search'.$i.'.html';
 		unlink($file);
-		if ($res === false) {
-			break;
-		}
+		//if ($res === false) {
+			//break;
+		//}
 		logg($session_id, 'Have '.count($result).' caches. Downloading search page ' . $i . '...');
-		$command = 'wget -a result/' . $session_id . '/wget.log -O "'.$file.'" --load-cookies '.$cookiefile.' --post-file="'.$postfile.'" --random-wait --timeout=5 --tries=3 '.$url;
+		$command = 'wget -a result/' . $session_id . '/wget.log -O "'.$file.'" --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 '.$url;
 		if (exec(escapeshellcmd($command)) != 0) {
 			break;
 		}
@@ -79,44 +77,48 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 		}
 		$i++;
 	}
-	unlink($postfile);
+	//unlink($postfile);
 	return $result;
 }
 
-function createSearchPostData($file, $i) {
-	if ($file == null) {
-		return '';
-	}
-	
-	$res = '__EVENTTARGET=ctl00%24ContentBody%24pgrTop%24lbGoToPage_' . $i . '&__VIEWSTATEFIELDCOUNT=3';
-	$html = new DOMDocument();
-	$html->loadHTMLFile($file);
-	$sxml = simplexml_import_dom($html);
-	$viewstate = $sxml->xpath('//input[@id="__VIEWSTATE"]/@value');
-	$viewstate1 = $sxml->xpath('//input[@id="__VIEWSTATE1"]/@value');
-	$viewstate2 = $sxml->xpath('//input[@id="__VIEWSTATE2"]/@value');
-	$res .= '&__VIEWSTATE=' . urlencode(substr($viewstate[0]->asXML(), 8, -1));
-	$res .= '&__VIEWSTATE1=' . urlencode(substr($viewstate1[0]->asXML(), 8, -1));
-	$res .= '&__VIEWSTATE2=' . urlencode(substr($viewstate2[0]->asXML(), 8, -1));
-	
-	return $res;
-}
+// function createSearchPostData($file, $i) {
+// 	if ($file == null) {
+// 		return '';
+// 	}
+// 	
+// 	$res = '__EVENTTARGET=ctl00%24ContentBody%24pgrTop%24lbGoToPage_' . $i . '&__VIEWSTATEFIELDCOUNT=3';
+// 	$html = new DOMDocument();
+// 	$html->loadHTMLFile($file);
+// 	$sxml = simplexml_import_dom($html);
+// 	$viewstate = $sxml->xpath('//input[@id="__VIEWSTATE"]/@value');
+// 	$viewstate1 = $sxml->xpath('//input[@id="__VIEWSTATE1"]/@value');
+// 	$viewstate2 = $sxml->xpath('//input[@id="__VIEWSTATE2"]/@value');
+// 	if ($viewstate) {
+// 		$res .= '&__VIEWSTATE=' . urlencode(substr($viewstate[0]->asXML(), 8, -1));
+// 	}
+// 	if ($viewstate1) {
+// 		$res .= '&__VIEWSTATE1=' . urlencode(substr($viewstate1[0]->asXML(), 8, -1));
+// 	}
+// 	if ($viewstate2) {
+// 		$res .= '&__VIEWSTATE2=' . urlencode(substr($viewstate2[0]->asXML(), 8, -1));
+// 	}
+// 	
+// 	return $res;
+// }
 
 function dumpCaches($file, $conditions) {
+	$content = file_get_contents($file);
+	$content = json_decode($content, true);
 	$html = new DOMDocument();
-	$html->loadHTMLFile($file);
+	$html->loadHTML($content['HtmlString']);
 	$sxml = simplexml_import_dom($html);
-	$caches = $sxml->xpath('//table[@class="SearchResultsTable Table"]//tr[contains(@class, "Data")]' . $conditions);
+	$caches = $sxml->xpath('//tr' . $conditions);
 	$res = array();
 	foreach ($caches as $cache) {
-		$name = $cache->xpath('td[@class="Merge"]/span[@class="small"]');
-		$name = $name[0]->asXML();
-		$name = explode('|', $name);
-		$name = trim(str_replace('&#13;', '', $name[1]));
-		$link = $cache->xpath('td[@class="Merge"]/a[@class="lnk"]/@href');
-		$link = $guid[0];
-		//$guid = substr($guid, stripos($guid, '?guid=') + 6, -1);
-		$res[$name] = $guid;
+		$link = $cache->td->a['href'];
+		$link = (string)$link;
+		$code = substr($link, strrpos($link, '/') + 1);
+		$res[$code] = $link;
 	}
 	return $res;
 }
@@ -143,37 +145,37 @@ function buildConditions($pointFilter) {
 		if (strlen($types) > 1) {
 			$types .= ' or ';
 		}
-		$types .= 'contains(td[@class="Merge"]//img[@class="SearchResultsWptType"]/@src, "'.$type.'")';
+		$types .= '//img/@alt="'.$type.'"';
 	}
 	$types .= ']';
 	$res .= $types;
 	
 	if (!empty($pointFilter['difficultyMin'])) {
-		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], "/")) >= '.$pointFilter['difficultyMin'].']';
+		$res .= '[number(td[@data-column="Difficulty"]) >= '.$pointFilter['difficultyMin'].']';
 	}
 
 	if (!empty($pointFilter['difficultyMax'])) {
-		$res .= '[number(substring-before(td[@class="AlignCenter"]/span[@class="small"], "/")) <= '.$pointFilter['difficultyMax'].']';
+		$res .= '[number(td[@data-column="Difficulty"]) <= '.$pointFilter['difficultyMax'].']';
 	}
 
 	if (!empty($pointFilter['terrainMin'])) {
-		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], "/")) >= '.$pointFilter['terrainMin'].']';
+		$res .= '[number(td[@data-column="Terrain"]) >= '.$pointFilter['terrainMin'].']';
 	}
 
 	if (!empty($pointFilter['terrainMax'])) {
-		$res .= '[number(substring-after(td[@class="AlignCenter"]/span[@class="small"], "/")) <= '.$pointFilter['terrainMax'].']';
+		$res .= '[number(td[@data-column="Terrain"]) <= '.$pointFilter['terrainMax'].']';
 	}
 	
 	if (!empty($pointFilter['notFound'])) {
-		$res .= '[not(contains(td/img/@src, "found.png"))]';
+		$res .= '[not(td//img/@alt="Found It!")]';
 	}
 
 	if (!empty($pointFilter['onlyActive'])) {
-		$res .= '[not(contains(td[@class="Merge"]/a/@class, "Strike"))]';
+		$res .= '[not(@class="disabled")]';
 	}
 
 	if (!empty($pointFilter['skipPremium'])) {
-		$res .= '[not(contains(td/img/@src, "premium_only.png"))]';
+			$res .= '[not(@data-premium)]';
 	}
 
 	return $res;
