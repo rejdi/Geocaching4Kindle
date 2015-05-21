@@ -71,6 +71,14 @@ if (!is_numeric($session_id)) {
 	echo '<pre>';
 	echo file_get_contents('result/'.$session_id.'/log.txt');
 	echo '</pre>';
+	
+	echo '<hr/>';
+	
+	echo '<pre>';
+	$file = escapeshellarg('result/'.$session_id.'/wget.log');
+	$line = `tail -n 10 $file`;
+	echo $line;
+	echo '</pre>';
 }
 ?>
 </body>
