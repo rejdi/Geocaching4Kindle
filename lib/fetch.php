@@ -55,7 +55,7 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 	$file = null;
 	while (count($result) < $max && $i < 10) {
 		//$url = 'http://www.geocaching.com/seek/nearest.aspx?lat=' . $point['locLat'] . '&lng='. $point['locLong'] . $dist;
-		$url = 'https://www.geocaching.com/play/search/more-results?startIndex='. $i*50 . '&inputOrigin='.$point['locLat'].'%2C'.$point['locLong'].'&sortOrigin=&fbu=false&filteredByOtherUsersFinds=false&originTreatment=0'.$dist;
+		$url = 'https://www.geocaching.com/play/search/more-results?startIndex='. $i*50 . '&inputOrigin='.$point['locLat'].','.$point['locLong'].'&sortOrigin=&fbu=false&filteredByOtherUsersFinds=false&originTreatment=0'.$dist;
 		
 		$file = 'result/' . $session_id . '/search'.$i.'.html';
 		unlink($file);
