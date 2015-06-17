@@ -53,6 +53,10 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 	$dist = empty($pointFilter['limitDist']) ? '' : ('&radius=' . (int)($pointFilter['limitDist']) . 'km');
 	$i = 0;
 	$file = null;
+	
+	$url = 'https://www.geocaching.com/play/search/@'.$point['locLat'].','.$point['locLong'].'?origin='.$point['locLat'].','.$point['locLong'];
+	$command = 'wget -a result/' . $session_id . '/wget.log -O /dev/null --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 '.$url;
+	exec(escapeshellcmd($command));
 	while (count($result) < $max && $i < 10) {
 		//$url = 'http://www.geocaching.com/seek/nearest.aspx?lat=' . $point['locLat'] . '&lng='. $point['locLong'] . $dist;
 		$url = 'https://www.geocaching.com/play/search/more-results?startIndex='. $i*50 . '&inputOrigin='.$point['locLat'].','.$point['locLong'].'&sortOrigin=&fbu=false&filteredByOtherUsersFinds=false&originTreatment=0'.$dist;
