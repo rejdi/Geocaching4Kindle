@@ -32,17 +32,27 @@ function fetchPrint($session_id, $cookiefile, $gccode) {
 //return array, where keys are cache codes, values are paths to downloaded files
 function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 	//http://www.geocaching.com/seek/nearest.aspx?lat=48.149245&lng=17.107005&dist=62.5
+	
+	$result = array();
 
 	if (!empty($point['city'])) {
 		logg($session_id, 'Getting '.$point['city'].' location ...');
-		$json = file_get_contents('http://www.geocaching.com/api/geocode?q='.urlencode($point['city']));
+		
+		$jsonFile = 'result/'.$session_id.'/locationSearchResult.json';
+		$url = "'http://www.geocaching.com/api/geocode?q='".urlencode($point['city'])."'";
+		$command = 'wget -a result/' . $session_id . '/wget.log -O ' . $jsonFile .' --load-cookies '.$cookiefile.' '.$url;
+		
+		if (exec(escapeshellcmd($command)) != 0) {
+			logg($session_id, 'Failed to get city location.');
+			return $result;
+		}
+		
+		$json = file_get_contents($jsonFile);
 		$data = json_decode($json);
 		$point['locLat'] = $data->data->lat;
 		$point['locLong'] = $data->data->lng;
 		logg($session_id, $point['city'] . ' at lat: ' . $point['locLat'] . ', lng: ' . $point['locLong']);
 	}
-
-	$result = array();
 	
 	if (empty($point['locLat']) || empty($point['locLong'])) {
 		return $result;
@@ -51,24 +61,28 @@ function fetchList($session_id, $cookiefile, $point, $pointFilter) {
 	$max = $pointFilter['limitCount'] > 0 ? min($pointFilter['limitCount'], 100) : 10;
 	$conditions = buildConditions($pointFilter);
 	$dist = empty($pointFilter['limitDist']) ? '' : ('&radius=' . (int)($pointFilter['limitDist']) . 'km');
-	$i = 0;
 	$file = null;
 	
 	$url = 'https://www.geocaching.com/play/search/@'.$point['locLat'].','.$point['locLong'].'?origin='.$point['locLat'].','.$point['locLong'];
 	$command = 'wget -a result/' . $session_id . '/wget.log -O /dev/null --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 '.$url;
-	exec(escapeshellcmd($command));
+	if (exec(escapeshellcmd($command)) != 0) {
+		logg($session_id, 'Failed to get initial search result.');
+		return $result;
+	}
+	
+	$i = 0;
 	while (count($result) < $max && $i < 10) {
 		//$url = 'http://www.geocaching.com/seek/nearest.aspx?lat=' . $point['locLat'] . '&lng='. $point['locLong'] . $dist;
-		$url = 'https://www.geocaching.com/play/search/more-results?startIndex='. $i*50 . '&inputOrigin='.$point['locLat'].','.$point['locLong'].'&sortOrigin=&fbu=false&filteredByOtherUsersFinds=false&originTreatment=0'.$dist;
+		$url = 'https://www.geocaching.com/play/search/more-results?startIndex='. $i*50 . '&origin='.$point['locLat'].','.$point['locLong'].'&selectAll=false'.$dist;
 		
-		$file = 'result/' . $session_id . '/search'.$i.'.html';
-		unlink($file);
+		$file = 'result/' . $session_id . '/search'.$i.'.json';
 		//if ($res === false) {
 			//break;
 		//}
 		logg($session_id, 'Have '.count($result).' caches. Downloading search page ' . $i . '...');
-		$command = 'wget -a result/' . $session_id . '/wget.log -O "'.$file.'" --load-cookies '.$cookiefile.' --random-wait --timeout=5 --tries=3 '.$url;
+		$command = 'wget -a result/' . $session_id . '/wget.log -O "'.$file.'" --load-cookies '.$cookiefile. ' --random-wait --timeout=5 --tries=3 '.$url;
 		if (exec(escapeshellcmd($command)) != 0) {
+			logg($session_id, 'Failed to fetch result page ' . $i . '. Breaking...');
 			break;
 		}
 		
