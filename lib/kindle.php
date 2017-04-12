@@ -16,7 +16,7 @@ function createKindle($session_id, $intermediate, $process, $settings) {
 	$kindleOut->importStylesheet($xsl);
 	$kindleOut->setParameter('', $settings);
 	$kindleOut->setParameter('', 'currentDate', date('r'));
-	$htmlfile = 'result/'.$session_id.'/result.html';
+	$htmlfile = 'result/'.$session_id.'/index.html';
 	$mobifile = 'result.mobi';
 	
 	if ($settings['withImages'] && $settings['map']) {
@@ -26,7 +26,7 @@ function createKindle($session_id, $intermediate, $process, $settings) {
 			//google mapy
 			//fetch('http://maps.google.com/maps/api/staticmap?zoom=15&size=640x480&maptype=roadmap&markers=icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png|'.$cache->map->lat.','.$cache->map->lon.'&sensor=false', 'result/'.$session_id.'/map_'.$cache->code.'.png');
 			//tu sa da zaroven vybrat medzi viac typmi map. see. staticmaplite/staticmap.php
-			fetchMap($session_id, 'http://localhost/gc/staticmaplite/staticmap.php?zoom=15&size=640x480&maptype='.$settings['maptype'].'&markers='.$cache->map->lat.','.$cache->map->lon.',icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png&sensor=false&center='.$cache->map->lat.','.$cache->map->lon, 'result/'.$session_id.'/map_'.$cache->code.'.png');
+			fetchMap($session_id, 'http://ksp.sk/~rejdi/gc/staticmaplite/staticmap.php?zoom=15&size=640x480&maptype='.$settings['maptype'].'&markers='.$cache->map->lat.','.$cache->map->lon.',icon:http://www.geocaching.com/images/WptTypes/pins/'.$cache->map->wptid.'.png&sensor=false&center='.$cache->map->lat.','.$cache->map->lon, 'result/'.$session_id.'/map_'.$cache->code.'.png');
 		}
 	}
 	

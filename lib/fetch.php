@@ -164,7 +164,7 @@ function buildConditions($pointFilter) {
 		if (strlen($types) > 1) {
 			$types .= ' or ';
 		}
-		$types .= 'td/a/span/img/@alt="'.$type.'"';
+		$types .= 'contains(td/a/span[3], "'.$type.'")';
 	}
 	$types .= ']';
 	$res .= $types;
@@ -186,7 +186,7 @@ function buildConditions($pointFilter) {
 	}
 	
 	if (!empty($pointFilter['notFound'])) {
-		$res .= '[not(td//img/@alt="Found It!")]';
+		$res .= '[not(contains(td//use/@href, "icon-found"))]';
 	}
 
 	if (!empty($pointFilter['onlyActive'])) {

@@ -4,7 +4,7 @@ function login($username, $password, $session_id) {
 	//TODO: skontrolovat username a password na ine znaky ako a-Z0-1
 	$cookiefile = 'result/' . $session_id . '/cookie.txt';
 	$postfile = 'result/' . $session_id . '/post.txt';
-	$tmp = 'result/' . $session_id . '/result.html';
+	$tmp = 'result/' . $session_id . '/index.html';
 	
 	//token
 	$command = "wget --keep-session-cookies -e robots=off --save-cookies ".$cookiefile." --referer='https://www.geocaching.com/account/login?returnUrl=%2fplay' 'https://www.geocaching.com/account/login?returnUrl=%2fplay' -O " . $tmp . " -o /dev/null";

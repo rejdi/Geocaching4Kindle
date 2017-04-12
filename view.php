@@ -35,7 +35,7 @@ if (!is_numeric($session_id)) {
 	$mobi = @filesize('result/'.$session_id.'/result.mobi');
 	$gpi = @filesize('result/'.$session_id.'/result.gpi');
 	$gpx = @filesize('result/'.$session_id.'/result.gpx');
-	$html = @filesize('result/'.$session_id.'/result.html');
+	$html = @filesize('result/'.$session_id.'/index.html');
 	
 	if ($mobi === false) {
 		$mobi = 'in progress...';
@@ -65,7 +65,7 @@ if (!is_numeric($session_id)) {
 	<a href="result/'.$session_id.'/result.mobi">.mobi ('.$mobi.')</a>
 	<a href="result/'.$session_id.'/result.gpi">.gpi ('.$gpi.')</a>
 	<a href="result/'.$session_id.'/result.gpx">.gpx ('.$gpx.')</a>
-	<a href="result/'.$session_id.'/result.html">.html ('.$html.')</a>
+	<a href="result/'.$session_id.'/index.html">.html ('.$html.')</a>
 	';
 	
 	echo '<pre>';
